@@ -36,7 +36,13 @@
 document.getElementById("username").innerHTML=guest;
         var request = new XMLHttpRequest();
         var params = "guest=" +guest + "&guestPass=" + guestPass;
+        var protocol = window.location.protocol;
+        var host = window.location.host;
+         var url = protocol+"//"+host+"/admin/addGuest";
+         alert(url);
+		
         request.onreadystatechange = function () {
+        alert(this.status);
         if (this.readyState == 4 && this.status == 200) {
             alert(this.responseText);
             if (this.responseText == "Success") {
@@ -44,9 +50,6 @@ document.getElementById("username").innerHTML=guest;
             }
         };
         }
-        var protocol = window.locaion.protocol;
-        var host = window.location.host;
-        var url = protocol+"//"+host+"/admin/addGuest";
         request.open('POST', url, true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send(params)

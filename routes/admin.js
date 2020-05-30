@@ -50,6 +50,7 @@ router.post('/addGuest', (req, res) => {
         guestName: req.body.guest,
         guestPass: req.body.guestPass
     })
+    console.log(newGuest);
     newGuest.save().then(guest => {
         res.send("Success");
     })
