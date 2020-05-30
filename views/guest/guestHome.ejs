@@ -1,0 +1,95 @@
+
+<html>
+<head>
+  <title>Guest Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+
+ input.form-control, textarea.form-control { 
+  width: 100%; 
+  border : none;
+  outline : 0;
+}
+  </style>
+  <script>
+  	function midEval(i){
+  		var protocol = window.location.protocol;
+  		var host = window.location.hostname;
+  		var port = window.location.port;
+  		var params = i;
+  		var url = protocol + "//"+host+":"+port+"/guest/midsem/"+params;
+  		window.location = url;
+  	}
+  	function endEval(i){
+  		var protocol = window.location.protocol;
+  		var host = window.location.hostname;
+  		var port = window.location.port;
+  		var params = i;
+  		var url = protocol + "//"+host+":"+port+"/guest/endsem/"+params;
+  		window.location = url;
+  	}
+  </script>
+</head>
+
+<body>
+
+<%- include('guestHeader') %>
+    
+<div class="col-sm">
+    <h1 style="text-align: center;">Teams</h1>
+    <table class="table table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Member1</th>
+          <th scope="col">Member2</th>
+          <th scope="col">Member3</th>
+          <th scope="col">Member4</th>
+          <th scope="col">Mid Evaluation</th>
+          <th scope="col">End Evaluation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i <  teamNames.length; i++) { %>
+        <tr>
+          <td value="<%= teamNames[i] %>"><%= teamNames[i] %></td>
+          <td value="<%= member1[i] %>"><%= member1[i] %></td>
+          <td value="<%= member2[i] %>"><%= member2[i] %></td>
+          <td value="<%= member3[i] %>"><%= member3[i] %></td>
+          <td value="<%= member4[i] %>"><%= member4[i] %></td>
+          <td><button class="btn btn-success"  id="<%= teamNames[i] %>" onclick="midEval(this.id)">Mid Eval</button></td>
+          <td><button  id="<%= teamNames[i] %>"  class="btn btn-success" onclick="endEval(this.id)">End Eval</button></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    
+</div>
+ 
+</div>
+
+</body>
+</html>
