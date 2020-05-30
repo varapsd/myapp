@@ -56,27 +56,27 @@
  </div>
 	  <div class="content">
 		 <div class="faculty-cont cont">
-			 <form enctype="multipart/form-data">
+			 <form>
 <input type="text" id="Tusername" class="inpt" required="required"  placeholder="Username">					<label for="email">Your email/username</label>	                    
 
 <input type="password" id="Tpassword" class="inpt" required="required" placeholder="Your password">
            <label for="password">Your password</label>
 
 	 <div class="submit-wrap">
-	 <input type="submit" value="Sign in" class="submit" onclick="checkCredentails()">
+	 <input type="submit" value="Sign in" class="submit" onclick="">
 	  <a href="#" class="more">Forgot your password?</a>
 			   </div>
         	  </form>
     	  </div>
     	  <div class="admin-cont cont">
-                <form enctype="multipart/form-data">
+                <form method="post" action="/admin">
 <input type="text" class="inpt" required="required" name="username" placeholder="Username" id="Ausername">					<label for="email">Your email/username</label>	                    
 
 <input type="password" name="password" id="Apassword" class="inpt" required="required" placeholder="Your password">
            <label for="password">Your password</label>
 
 	 <div class="submit-wrap">
-	 <input type="submit" value="Sign in" class="submit" onclick="checkAdminCredentails()">
+	 <input type="submit" value="Sign in" class="submit" onclick="">
 	  <a href="#" class="more">Forgot your password?</a>
 			   </div>
         	  </form>

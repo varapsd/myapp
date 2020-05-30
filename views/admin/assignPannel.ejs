@@ -1,0 +1,174 @@
+<html>
+
+<head>
+    <!-- Materializecss compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+
+    <link href="https://cdn.jsdelivr.net/npm/materialize-stepper@2.1.4/materialize-stepper.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Materializecss compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <!-- jQueryValidation Plugin -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <style>
+        body {
+            background: #FFFFE6;
+        }
+
+        input.formcontrol {
+            width: auto;
+        }
+
+
+        .step {
+            background: #F5F5DC;
+
+        }
+    </style>
+
+    <script>
+    	var protocol = window.location.protocol;
+    	var host = window.location.host;
+        function step1() {
+        	var url = protocol+"//"+host+"/admin/setupCourse";
+            window.location = url;
+        }
+
+        function step3() {
+        	var url = protocol+"//"+host+"/admin/setEvalScheme";
+            window.location = url;
+        }
+        function step2() {
+        	var url = protocol+"//"+host+"/admin/setEvaluators";
+            window.location = url;
+        }
+
+        function step4() {
+        	var url = protocol+"//"+host+"/admin/assign";
+            window.location = url;
+        }
+    </script>
+</head>
+
+<body>
+
+    <%- include('adminHeader') %>
+
+    <%- include('adminNav') %>
+
+
+    <div class="container-fluid">
+
+        <div class="left" style="width:25%;">
+            <form class="col-sm-auto">
+                <ul class="stepper parallel">
+                    <li class="step active" onclick="step1()">
+                        <div class="step-title waves-effect waves-dark">Step 1<p>Set up basic details
+
+                            </p>
+                        </div>
+                    </li>
+                    <li class="step active" onclick="step2()">
+                        <div class="step-title waves-effect waves-dark">Step 2 <p>Specify evaluators and weightages</p>
+                        </div>
+
+                    </li>
+                    <li class="step active" onclick="step3()">
+                        <div class="step-title waves-effect waves-dark">Step 3<p>Specify mid sem evaluation scheme</p>
+                        </div>
+
+                    </li>
+                    <li class="step active" onclick="step4()">
+                        <div class="step-title waves-effect waves-dark">Step 4<p>Specify end sem evaluation scheme</p>
+                        </div>
+
+                    </li>
+
+
+                </ul>
+            </form>
+        </div>
+
+        <div class="right" style="width:75%" ;>
+
+            <div class="multisteps-form__panel shadow p-4  rounded" style="background:#F8F8FF;">
+                <div class="button-row mt-4"><button class="btn btn-primary" type="button" title="Next"
+                        onclick="step4()">back</button>
+                    <h3 class="multisteps-form__title center">Assign Pannel Members</h3>
+                    <div class="multisteps-form__content">
+
+                        <table class="table table-fixed">
+
+                            <thead>
+                                <th scope="row">Teacher Name</th>
+                                <th scope="row">panel member 1</th>
+                                <th scope="row">panel member 2</th>
+                                <th scope="row">panel member 3</th>
+                                <th scope="row"></th>
+                                </head>
+                            <tbody>
+                                <% for (var i=0; i<teachers.length ; i++){ %>
+                                <tr>
+                                    <td><%= teachers[i].name %></td>
+                                    <% for(var j=0; j<3 ; j++){ %>
+                                    <td>
+                                        <div class="form-group">
+                                            <select class="form-control" name="<%= i %>">
+                                                <option hidden selected disabled value="">--select name</option>
+                                                <% for(var k=0 ; k<teachers.length ; k++){ %>
+                                                <% if(i!=k){ %>
+                                                <option value="<%= teachers[k].id %>"><%= teachers[k].name %></option>
+                                                <% } %>
+                                                <% } %>
+                                            </select>
+                                        </div>
+
+                                    </td>
+                                    <% } %>
+
+
+                                    <td><button type="button" class="btn btn-primary" id="<%= i %>"
+                                            onclick="show(this)">submit</button></td>
+
+                                </tr>
+                                <% } %>
+
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function show(sel) {
+            var x = document.getElementsByName(sel.id);
+            if (x[0].value == x[1].value || x[1].value == x[2].value || x[0].value == x[2].value) {
+                alert("invalid");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

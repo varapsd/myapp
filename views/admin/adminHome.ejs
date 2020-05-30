@@ -1,0 +1,131 @@
+<html>
+
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+  .fakeimg {
+   height: 220px;
+}
+
+
+  #card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+           margin-top: 10%;
+           margin-left: 4%;
+           margin-right: 4%;
+           height: 30%;
+           padding:0;
+           background: white;
+        }
+
+        #card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+        }
+
+
+
+  .heading{
+   background : #7FFF00;
+   height : 1.5em;
+}
+
+  
+  </style>
+  <script>
+       $(document).ready(function() {
+           $('.nav-item').click(function() {
+               $('.nav-item.active').removeClass("active");
+               $(this).addClass("active")
+           });
+       });
+  </script>
+</head>
+
+<script>
+	var protocol = window.location.protocol;
+	var host = window.location.host;
+    function newGuest() {
+    	var url = protocol+"//"+host+"/admin/addGuest";
+    	window.location = url;
+    }
+    function assignStudent() {
+    	var url = protocol+"//"+host+"/admin/assignStudent";
+        window.location = url;
+
+    }
+    function courseStruct(){
+    	var url = protocol+"//"+host+"/admin/setupCourse";
+    	window.location = url;
+    }
+    function displayMarks(){
+    	var url = protocol+"//"+host+"/admin/displayMarks";
+    	window.location = url;
+    }
+</script>
+
+<body>
+
+<%- include('adminHeader') %>
+
+<%- include('adminNav') %>
+
+<div class="container" style="margin-top:30px;">
+  <div class="row" style="padding:0;margin:0;">
+    <div class="col-sm-3" id="card" onclick="displayMarks()">
+      <div class="fakeimg">
+    <img src="http://cminsure.com/wp-content/uploads/ContentImage-GradeAPlus.jpg-550x0.jpg" style="width:100%;height:150px;">
+    <div class="contain">
+        <h4 style="text-align: center;"><b>View Student Grades</b></h4>
+    </div>
+</div>
+    </div>
+
+<div class="col-sm-3" id="card" onclick="courseStruct()">
+      <div class="fakeimg">
+    <img src="https://3.imimg.com/data3/SP/KV/MY-9157131/course-structure-250x250.jpg" style="width:100%; height:150px">
+    <div class="contain">
+        <h4 style="text-align: center;"><b>Add Course</b></h4>
+    </div>
+</div>
+    </div>
+
+<div class="col-sm-3" id="card" onclick="newGuest()">
+      <div class="fakeimg">
+    <img src="https://image.flaticon.com/icons/svg/1828/1828272.svg" style="width:100%;height:150px;">
+    <div class="contain">
+        <h4 style="text-align: center;"><b>Add Guest</b></h4>
+    </div>
+</div>
+    </div>
+
+   
+</div>
+
+    
+</body>
+</html>

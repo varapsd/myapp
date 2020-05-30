@@ -1,0 +1,154 @@
+<html>
+
+<head>
+    <!-- Materializecss compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+
+    <link href="https://cdn.jsdelivr.net/npm/materialize-stepper@2.1.4/materialize-stepper.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- Materializecss compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <!-- jQueryValidation Plugin -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
+
+    <style>
+        body {
+            background: #FFFFE6;
+        }
+
+
+        .step {
+            background: #F5F5DC;
+
+        }
+    </style>
+    <script>
+    	var protocol = window.location.protocol;
+    	var host = window.location.host;
+        function step1() {
+        	var url = protocol+"//"+host+"/admin/setupCourse";
+            window.location = url;
+        }
+
+        function step2() {
+        	var url = protocol+"//"+host+"/admin/setEvaluators";
+            window.location = url;
+        }
+        function step3() {
+        	var url = protocol+"//"+host+"/admin/setEvalScheme";
+            window.location = url;
+        }
+        function step4() {
+        	var url = protocol+"//"+host+"/admin/assign";
+            window.location = url;
+        }
+        function setEvalScheme(){
+            var request = new XMLHttpRequest();
+            var f1 = document.getElementById("f1").value;
+            var f2 = document.getElementById("f2").value;
+            var f3 = document.getElementById("f3").value;
+            var f4 = document.getElementById("f4").value;
+            var f5 = document.getElementById("f5").value;
+            var f6 = document.getElementById("f6").value;
+            var params = "f1=" + f1 + "&f2=" + f2 + "&f3=" + f3 + "&f4=" + f4 + "&f5=" + f5+ "&f6=" + f6;
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                };
+            }
+            var url = protocol+"//"+host+"/admin/setEvalScheme";
+            request.open('POST', url, false);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(params);
+
+
+        }
+
+       
+    </script>
+
+</head>
+
+<body>
+
+   <%- include('adminHeader') %>
+
+   <%- include('adminNav') %>
+
+
+    <div class="container-fluid">
+
+        <div class="left" style="width:25%;">
+            <form class="col-sm-auto">
+                <ul class="stepper parallel">
+                    <li class="step active" onclick="step1()">
+                        <div class="step-title waves-effect waves-dark">Step 1<p>Set up basic details
+
+                            </p>
+                        </div>
+                    </li>
+                    <li class="step active" onclick="step2()">
+                        <div class="step-title waves-effect waves-dark">Step 2 <p>Specify evaluators and weightages</p>
+                        </div>
+
+                    </li>
+                    <li class="step" style="background:#00FFFF;">
+                        <div class="step-title waves-effect waves-dark">Step 3<p>Specify evaluation scheme</p>
+                        </div>
+
+                    </li>
+                    <li class="step" onclick="step4()">
+                        <div class="step-title waves-effect waves-dark">Step 4<p>Assign guides and pannel members</p>
+                        </div>
+
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="right" style="width:75%" ;>
+
+            <div class="multisteps-form__panel shadow p-4  rounded" style="background:#F8F8FF;">
+                <h3 class="multisteps-form__title">Specify evaluation scheme (Format: Feild Name-Marks) </h3>
+                <div class="multisteps-form__content">
+                    <div class="form-row mt-4">
+                        <div class="col-12 col-sm-6">
+                            <input class="multisteps-form__input form-control" type="text" id="f1" placeholder="Feild-1" />
+                        </div>
+                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                            <input class="multisteps-form__input form-control" type="text" id="f2" placeholder="Feild-2" />
+                        </div>
+                    </div>
+                    <div class="form-row mt-4">
+                        <div class="col-12 col-sm-6">
+                            <input class="multisteps-form__input form-control" type="text" id="f3" placeholder="Feild-3" />
+                        </div>
+                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                            <input class="multisteps-form__input form-control" type="text" id="f4" placeholder="Feild-4" />
+                        </div>
+                    </div>
+                    <div class="form-row mt-4">
+                        <div class="col-12 col-sm-6">
+                            <input class="multisteps-form__input form-control" type="text" id="f5" placeholder="Feild-5" />
+                        </div>
+                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                            <input class="multisteps-form__input form-control" type="text" id="f6"
+                                placeholder="Feild-6" />
+                        </div>
+                    </div>
+                    <div class="button-row d-flex mt-4">
+                        <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next" onclick="setEvalScheme()">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

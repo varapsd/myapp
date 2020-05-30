@@ -48,6 +48,10 @@ home sends login page
 app.get('/', (req, res) => {
     res.render('login2.ejs')
 })
+//admin
+var admin = require('./routes/admin');
+app.use('/admin',admin);
+//guest
 var guest = require('./routes/guest');
 app.use('/guest',guest);
        

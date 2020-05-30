@@ -1,0 +1,246 @@
+
+<html>
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+
+
+
+  </style>
+  
+  <script>
+   $(document).ready(function(){
+    $(".marks").click(function(){
+    	$("#modelId").text($(this).children(".roll").html());
+    	$("#modelName").text($(this).children(".studentName").html());
+    	$("#modelGuide").text($(this).children(".guideName").html());
+    	$("#modelBatch").text($(this).children(".batch").html());
+    	$("#modelmidsemTeacher").text($(this).children(".midsemTeacher").html());
+    	$("#modelendsemTeacher").text($(this).children(".endsemTeacher").html());
+    	$("#modelmidsemGuest").text($(this).children(".midsemGuest").html());
+    	$("#modelendsemGuest").text($(this).children(".endsemGuest").html());
+		$("#modelmidsemPannel1").text($(this).children(".midsemPannel1").html());
+	    $("#modelmidsemPannel2").text($(this).children(".midsemPannel2").html());
+	    $("#modelmidsemPannel3").text($(this).children(".midsemPannel3").html());
+	    $("#modelendsemPannel1").text($(this).children(".endsemPannel1").html());
+	    $("#modelendsemPannel2").text($(this).children(".endsemPannel2").html());
+	    $("#modelendsemPannel3").text($(this).children(".endsemPannel3").html());	
+      $("#myModal").modal();
+    });
+  });
+  </script>
+</head>
+
+<body>
+
+<%- include('adminHeader') %>
+
+<%- include('adminNav') %>
+
+<div class="container-fluid">
+<h3 style="text-align:center">student Marks</h3>
+<div class="table-responsive">
+<table class="table table-hover">
+   <thead>
+    <tr>
+    <th rowspan="2" class="align-middle">Student Id</th>
+    <th rowspan="2" class="align-middle">Student Name</th>
+    <th rowspan="2" class="align-middle">Guide Name</th>
+    <th colspan="2" style="text-align:center">Guide Marks</th>
+    <th colspan="2" style="text-align:center">panel Marks</th>
+    <th colspan="2"style="text-align:center">Guest Marks</th>
+    <th rowspan="2" class="align-middle">Grade</th>
+    </tr>
+       <th>midsem</th>
+       <th>endsem</th>
+       <th>midsem</th>
+       <th>endsem</th>
+       <th>midsem</th>
+       <th>endsem</th>
+    <tr>
+     </tr>
+   </thead>
+  <tbody>
+  <% for(var i = 0 ; i<students.length;i++){ %>
+  	<tr class="marks">
+  	   <td class="roll"><%= students[i].roll %></td>
+  	   <td class="studentName"><%= students[i].studentName %></td>
+  	   <td class="guideName"><%= students[i].guideName %></td>
+  	   <td class="midsemTeacher">
+  	   	<% if(students[i].midsemTeacher){ %>
+  	   		<%= students[i].midsemTeacher %>
+  	   	<% }else{ %>
+  	   		N.A
+  	   	<% } %>
+  	   </td>
+  	   <td class="endsemTeacher">
+  	   	<% if(students[i].endsemTeacher){ %>
+  	   		<%= students[i].endsemTeacher %>
+  	   	<% }else{ %>
+  	   		N.A
+  	   	<% } %>
+  	   </td>
+  	   <td>
+  	   	<% if(students[i].midsemPannel1 && students[i].midsemPannel2 && students[i].midsemPannel3) { %>
+  	   		<% var sum = students[i].midsemPannel1 + students[i].midsemPannel2 + students[i].midsemPannel3 %>
+  	   		<% var result = sum/3 %>
+  	   		<%= result %>
+  	   	<% }else{ %>
+  	   		N.A
+  	   	<% } %>
+  	   </td>
+  	   <td>
+  	   	<% if(students[i].endsemPannel1 && students[i].endsemPannel2 && students[i].endsemPannel3) { %>
+  	   		<% var sum = students[i].endsemPannel1 + students[i].endsemPannel2 + students[i].endsemPannel3 %>
+  	   		<% var result = sum/3 %>
+  	   		<%= result %>
+  	   	<% }else{ %>
+  	   		N.A
+  	   	<% } %>
+  	   </td>
+  	   <td class="midsemGuest">
+  	   	<% if(students[i].midsemGuest){ %>
+  	   		<%= students[i].midsemGuest %>
+  	   	<% }else{ %>
+  	   		N.A
+  	   	<% } %>
+  	   </td>
+  	   <td class="endsemGuest">
+  	   	<% if(students[i].endsemGuest){ %>
+  	   		<%= students[i].endsemGuest %>
+  	   	<% }else{ %>
+  	   		N.A
+  	   	<% } %>
+  	   </td>
+  	   <td class="grade">
+  	   	<% if(students[i].grade){ %>
+  	   		<%= students[i].grade %>
+  	   	<% }else{ %>
+  	   		N.A
+  	   	<% } %>
+  	   </td>
+  	   <td class="batch" style="display : none"><%= students[i].batch %></td>
+  	   <td class="midsemPannel1" style="display : none"><%= students[i].midsemPannel1 %></td>
+  	   <td class="midsemPannel2" style="display : none"><%= students[i].midsemPannel2 %></td>
+  	   <td class="midsemPannel3" style="display : none"><%= students[i].midsemPannel3 %></td>
+  	   <td class="endsemPannel1" style="display : none"><%= students[i].endsemPannel1 %></td>
+  	   <td class="endsemPannel2" style="display : none"><%= students[i].endsemPannel2 %></td>
+  	   <td class="endsemPannel3" style="display : none"><%= students[i].endsemPannel3 %></td>
+  	   </tr>
+  	
+  <% } %>
+ 
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">student Data</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        </div>
+        <div class="modal-body">
+
+          <div class="multisteps-form__panel shadow p-4  rounded">
+  <div class="row">
+    <div class="col">
+      <span>Roll Number :</span><span class="h6" id="modelId"></span>
+    </div>
+    <div class="col">
+      <span>Batch :</span><span class="h6" id="modelBatch"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span>Name :</span><span class="h6" id="modelName"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span>Guide Name :</span><span class="h6" id="modelGuide"></span>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <th>Marks</th>
+        <th>Guide</th>
+        <th>Panel1</th>
+        <th>Panel2</th>
+        <th>Panel3</th>
+        <th>Guest</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mid Sem</td>
+          <td><span class="h6" id="modelmidsemTeacher"></span></td>
+          <td><span class="h6" id="modelmidsemPannel1"></span></td>
+          <td><span class="h6" id="modelmidsemPannel2"></span></td>
+          <td><span class="h6" id="modelmidsemPannel3"></span></td>
+          <td><span class="h6" id="modelmidsemGuest"></span></td>
+        </tr>
+        <tr>
+          <td>End Sem</td>
+          <td><span class="h6" id="modelendsemTeacher"></span></td>
+          <td><span class="h6" id="modelendsemPannel1"></span></td>
+          <td><span class="h6" id="modelendsemPannel2"></span></td>
+          <td><span class="h6" id="modelendsemPannel3"></span></td>
+          <td><span class="h6" id="modelendsemGuest"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span>Mid Sem</span>
+    </div>
+    <div class="col">
+      <span>End Sem</span>
+    </div>
+    <div class="col">
+      <span>Total</span>
+    </div>
+    <div class="col">
+      <span>Grade</span>
+    </div>
+  </div>
+
+</div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+
+  </style>
+</head>
+
+<script>
+    function generatePassword(){
+        var guest=document.getElementById("guestname").value;
+    if(guest==""){
+     return;
+   }
+        var guestPass=Math.floor(Math.random() * 100) + 1+"guest";
+        document.getElementById("newPass").innerHTML=guestPass;
+document.getElementById("username").innerHTML=guest;
+        var request = new XMLHttpRequest();
+        var params = "guest=" +guest + "&guestPass=" + guestPass;
+        request.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+            if (this.responseText == "Success") {
+                alert("guest added!")
+            }
+        };
+        }
+        var protocol = window.locaion.protocol;
+        var host = window.location.host;
+        var url = protocol+"//"+host+"/admin/addGuest";
+        request.open('POST', url, true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(params)
+
+    }
+</script>
+
+<body>
+
+<%- include('adminHeader') %>
+
+<%- include('adminNav') %>
+    
+<div class="col-sm-5" style="margin-left:auto;margin-right:auto;padding-top:3%;padding-bottom:2%; background:#EAF7D8;">
+<p class="h3" style="text-align:center;">
+<img src="https://image.flaticon.com/icons/svg/1828/1828272.svg" style="height:15%;width:15%; margin-right:2%">ADD GUEST
+</p>
+<form > 
+  
+  <div class="form-row"> 
+    <div class="col"> 
+      <label class="h5">Guest Name</label>
+      <input type="text" class="form-control" id="guestname" placeholder="name" required >
+     <button class="btn btn-success" style="float:right;margin-top:3%;" onclick="generatePassword()">Generate Password</button>
+    </div>
+  </div> 
+</form>
+</div>
+<div class="col-sm-5" style="margin-left:auto;margin-right:auto;margin-top:3%;padding:2%; background:#EAF7D8;">
+<p class="h6">username : <span id="username"></span></p>
+<p class="h6">password : <span id="newPass"></span></p>
+</div>
+
+</body>
+</html>

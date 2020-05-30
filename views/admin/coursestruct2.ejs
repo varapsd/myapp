@@ -1,0 +1,154 @@
+<html>
+
+<head>
+    <!-- Materializecss compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+
+    <link href="https://cdn.jsdelivr.net/npm/materialize-stepper@2.1.4/materialize-stepper.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- Materializecss compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <!-- jQueryValidation Plugin -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
+
+    <style>
+        body {
+            background: #FFFFE6;
+        }
+
+        .step {
+            background: #F5F5DC;
+
+        }
+    </style>
+
+    <script>
+    	var protocol = window.location.protocol;
+    	var host = window.location.host;
+        function step2() {
+        	var url = protocol+"//"+host+"/admin/setEvaluators";
+            window.location = url;
+        }
+
+        function step3() {
+        	var url = protocol+"//"+host+"/admin/setEvalScheme";
+            window.location = url;
+        }
+
+        function step4() {
+        	var url = protocol+"//"+host+"/admin/assign";
+            window.location = url;
+        }
+    </script>
+    <script>
+        function saveCourseDetails() {
+            var request = new XMLHttpRequest();
+            var code = document.getElementById("code").value;
+            var instructor = document.getElementById("instructor").value;
+            var hours = document.getElementById("hours").value;
+            var credits = document.getElementById("credits").value;
+            var name = document.getElementById("name").value;
+            var params = "code=" + code + "&name=" + name + "&credits=" + credits + "&hours=" + hours + "&instructor=" + instructor;
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                };
+            }
+            var protocol = window.location.protocol;
+            var host = window.locatioin.host;
+            var url = protocol+"//"+host+"/admin/setCourseDetails"
+            request.open('POST', url, false);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(params);
+        }
+    </script>
+</head>
+
+<body>
+
+   <%- include('adminHeader') %>
+   <%- include('adminNav') %>
+    
+
+    <div class="container-fluid">
+
+        <div class="left" style="width:25%;">
+            <form class="col-sm-auto">
+                <ul class="stepper parallel">
+                    <li class="step active" style="background:#00FFFF;">
+                        <div class="step-title waves-effect waves-dark">Step 1<p>Set up basic details
+
+                            </p>
+                        </div>
+                    </li>
+                    <li class="step" onclick="step2()">
+                        <div class="step-title waves-effect waves-dark">Step 2 <p>Specify evaluators and weightages</p>
+                        </div>
+
+                    </li>
+                    <li class="step" onclick="step3()">
+                        <div class="step-title waves-effect waves-dark">Step 3<p>Specify evaluation scheme</p>
+                        </div>
+
+                    </li>
+                    <li class="step" onclick="step4()">
+                        <div class="step-title waves-effect waves-dark">Step 4<p>Assign guides and pannel members</p>
+                        </div>
+
+                    </li>
+
+                </ul>
+            </form>
+        </div>
+        <div class="right" style="width:75%" ;>
+
+            <div class="multisteps-form__panel shadow p-4  rounded" style="background:#F8F8FF;">
+                <h3 class="multisteps-form__title">Set up basic details </h3>
+                <div class="multisteps-form__content">
+                    <div class="form-row mt-4">
+                        <div class="col-12 col-sm-6">
+                            <input class="multisteps-form__input form-control" type="text" id="name"
+                                placeholder="Course Name" />
+                        </div>
+                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                            <input class="multisteps-form__input form-control" type="text" id="code"
+                                placeholder="Course Code" />
+                        </div>
+                    </div>
+                    <div class="form-row mt-4">
+                        <div class="col-12 col-sm-6">
+                            <input class="multisteps-form__input form-control" type="text" id="instructor"
+                                placeholder="Course Instructor" />
+                        </div>
+                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                            <input class="multisteps-form__input form-control" type="text" id="hours"
+                                placeholder="Number of hours(Per week)" />
+                        </div>
+                    </div>
+                    <div class="form-row mt-4">
+                        <div class="col-12 col-sm-6">
+                            <input class="multisteps-form__input form-control" type="text" id="credits"
+                                placeholder="Course credits" />
+                        </div>
+                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                            <input class="multisteps-form__input form-control" type="text"
+                                placeholder="Minimum attendance" />
+                        </div>
+                    </div>
+                    <div class="button-row d-flex mt-4">
+                        <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next" onclick="saveCourseDetails()">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
