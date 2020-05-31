@@ -7,16 +7,15 @@ var MajorScheme = require('../Models/majorScheme').majorScheme;
 //guestLogin session
 
 router.post('/',(req,res)=>{
-        GuestLogin.findOne({guestName : req.body.username, guestPass : req.body.password},(err,ValidGuest)=>{
+        GuestLogin.findOne({guestName : req.body.u, guestPass : req.body.p},(err,ValidGuest)=>{
                 if(ValidGuest == null){
-                        console.log('incorrect data');
-                        res.redirect('/');
+                        res.send("invalid data")
                 }
                 else{
                         console.log('success');
-                        req.session.ID = req.body.username;
+                        req.session.ID = req.body.u;
                         req.session.user = "guest";
-                        res.redirect('/guest');
+                        res.send("success");
                 }
         })
 });

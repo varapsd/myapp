@@ -23,39 +23,44 @@
 }
 
   </style>
+	<script>
+	    function generatePassword(){
+	        var guest=document.getElementById("guestname").value;
+	    if(guest==""){
+	     return;
+	   }
+	        var guestPass=Math.floor(Math.random() * 100) + 1+"guest";
+	        document.getElementById("newPass").innerHTML=guestPass;
+			document.getElementById("username").innerHTML=guest;
+
+	      	 var params = "guest=" +guest + "&guestPass=" + guestPass;
+
+			var request = new XMLHttpRequest();
+	       request.onreadystatechange = function() {
+	       		
+	           if (this.readyState == 4 && this.status == 200) {
+	             
+	              if(request.responseText=="Success"){
+	              	alert('Successfully added');          	
+			        document.getElementById("newPass").innerHTML=guestPass;
+					document.getElementById("username").innerHTML=guest;
+					document.getElementById("guestname").value = "";
+	              }
+	              else{
+	              	alert('failed try again');
+	              }
+	           }
+	       };
+	       request.open("POST", "/admin/addGuest", true);
+	       request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	       request.send(params)
+
+	   }
+	</script>
+  
 </head>
 
-<script>
-    function generatePassword(){
-        var guest=document.getElementById("guestname").value;
-    if(guest==""){
-     return;
-   }
-        var guestPass=Math.floor(Math.random() * 100) + 1+"guest";
-        document.getElementById("newPass").innerHTML=guestPass;
-document.getElementById("username").innerHTML=guest;
-        var request = new XMLHttpRequest();
-        var params = "guest=" +guest + "&guestPass=" + guestPass;
-        var protocol = window.location.protocol;
-        var host = window.location.host;
-         var url = protocol+"//"+host+"/admin/addGuest";
-         alert(url);
-		
-        request.onreadystatechange = function () {
-        alert(this.status);
-        if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
-            if (this.responseText == "Success") {
-                alert("guest added!")
-            }
-        };
-        }
-        request.open('POST', url, true);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send(params)
 
-    }
-</script>
 
 <body>
 
@@ -67,7 +72,6 @@ document.getElementById("username").innerHTML=guest;
 <p class="h3" style="text-align:center;">
 <img src="https://image.flaticon.com/icons/svg/1828/1828272.svg" style="height:15%;width:15%; margin-right:2%">ADD GUEST
 </p>
-<form > 
   
   <div class="form-row"> 
     <div class="col"> 
@@ -76,7 +80,6 @@ document.getElementById("username").innerHTML=guest;
      <button class="btn btn-success" style="float:right;margin-top:3%;" onclick="generatePassword()">Generate Password</button>
     </div>
   </div> 
-</form>
 </div>
 <div class="col-sm-5" style="margin-left:auto;margin-right:auto;margin-top:3%;padding:2%; background:#EAF7D8;">
 <p class="h6">username : <span id="username"></span></p>

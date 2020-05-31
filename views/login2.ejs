@@ -28,6 +28,70 @@
 
 
   </style>
+	
+	<script>
+	function facultyLogin(){
+	 var request = new XMLHttpRequest();
+	 var u = document.getElementById('Tusername').value;
+	 var p = document.getElementById('Tpassword').value;
+	 var params =  "u="+u+"&p="+p;
+	 request.onreadystatechange = function() {
+	     if (this.readyState == 4 && this.status == 200) {
+	     	alert(request.responseText);
+	     	if(request.responseText == "success"){
+	     		window.location = "#";
+	     	}
+	     	else
+	        	document.getElementById("Terror").innerHTML = "incorrect details try again";
+	     }
+	 };
+	 request.open("POST", "/facultyLogin", true);
+	 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	 request.send(params)
+	 }
+
+	 function adminLogin(){
+	 var request = new XMLHttpRequest();
+	 var u = document.getElementById('Ausername').value;
+	 var p = document.getElementById('Apassword').value;
+	 var params =  "u="+u+"&p="+p;
+	 request.onreadystatechange = function() {
+	     if (this.readyState == 4 && this.status == 200) {
+	     	alert(request.responseText);
+	     	if(request.responseText == "success"){
+	     		window.location = "/admin/adminHome";
+	     	}
+	     	else
+	        	document.getElementById("Aerror").innerHTML = "incorrect details";
+	     }
+	 };
+	 request.open("POST", "/admin", true);
+	 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	 request.send(params)
+	 }
+
+	 function guestLogin(){
+	 var request = new XMLHttpRequest();
+	 var u = document.getElementById('Gusername').value;
+	 var p = document.getElementById('Gpassword').value;
+	 var params =  "u="+u+"&p="+p;
+	 request.onreadystatechange = function() {
+	     if (this.readyState == 4 && this.status == 200) {
+	     	alert(request.responseText);
+	     	if(request.responseText == "success"){
+	     		window.location = "/guest";
+	     	}
+	     	else
+	        	document.getElementById("Gerror").innerHTML = "incorrect details";
+	     }
+	 };
+	 request.open("POST", "/guest", true);
+	 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	 request.send(params)
+	 }
+
+	</script>
+  
 </head>
 
 <body>
@@ -38,14 +102,9 @@
   <h1> MAJOR PROJECT EVALUATION</h1>
   <p>Welcome </p>
 </div>
-
 </div>
 
-
-
-<section class="container">
- 
-			        
+<section class="container">			        
  <div class="tabs">
 	 <span class="tab faculty active">
     <a href="#faculty">faculty</a></span>
@@ -56,42 +115,42 @@
  </div>
 	  <div class="content">
 		 <div class="faculty-cont cont">
-			 <form>
+			 
 <input type="text" id="Tusername" class="inpt" required="required"  placeholder="Username">					<label for="email">Your email/username</label>	                    
 
 <input type="password" id="Tpassword" class="inpt" required="required" placeholder="Your password">
            <label for="password">Your password</label>
-
+<p class="error" id="Terror" style="color : red"></p>
 	 <div class="submit-wrap">
-	 <input type="submit" value="Sign in" class="submit" onclick="">
+	 <input type="submit" value="Sign in" class="submit" onclick="facultyLogin()">
 	  <a href="#" class="more">Forgot your password?</a>
 			   </div>
-        	  </form>
+        	 
     	  </div>
     	  <div class="admin-cont cont">
-                <form method="post" action="/admin">
+                
 <input type="text" class="inpt" required="required" name="username" placeholder="Username" id="Ausername">					<label for="email">Your email/username</label>	                    
 
 <input type="password" name="password" id="Apassword" class="inpt" required="required" placeholder="Your password">
            <label for="password">Your password</label>
-
+<p class="error" id="Aerror" style="color : red"></p>
 	 <div class="submit-wrap">
-	 <input type="submit" value="Sign in" class="submit" onclick="">
+	 <input type="submit" value="Sign in" class="submit" onclick="adminLogin()">
 	  <a href="#" class="more">Forgot your password?</a>
 			   </div>
-        	  </form>
+        	  
             </div>
         <div class="guest-cont cont">
-                <form action="/guest" method="post">
-<input type="text" name="username" class="inpt" required="required" value="" placeholder="username or email">                    
+                
+<input type="text" name="username" id="Gusername" class="inpt" required="required" value="" placeholder="username or email">                    
 
-<input type="password" name="password" id="gpassword" class="inpt" required="required" placeholder="Your password">
-        
+<input type="password" name="password" id="Gpassword" class="inpt" required="required" placeholder="Your password">
+<p class="error" id="Gerror" style="color : red"></p>        
 	 <div class="submit-wrap">
-	 <input type="submit" value="Sign in" class="submit">
+	 <input type="submit" value="Sign in" class="submit" onclick="guestLogin()">
 	  <a href="#" class="more">Forgot your password?</a>
 			   </div>
-        	  </form>
+        	  
             </div>
 	 </div>
 		  
@@ -104,47 +163,4 @@
 <script  src="/function.js"></script>
 
 </body>
-<script>
-  /**
-   * make a post request to check credentials.Redirect if right credentaials
-  */
-  function checkCredentails() {
-    var request = new XMLHttpRequest();
-    var u = document.getElementById("Tusername").value;
-    var p = document.getElementById("Tpassword").value;
-    var params = "u=" + u + "&p=" + p;
-    request.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-        if (this.responseText == "Success") {
-          window.location = "http://localhost:8081/teacherHome";
-        }
-      };
-    }
-    request.open('POST', 'http://localhost:8081/teacherLogin', true);
-    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    request.send(params)
-  }
-  function checkAdminCredentails(){
-    var request = new XMLHttpRequest();
-    var u = document.getElementById("Ausername").value;
-    var p = document.getElementById("Apassword").value;
-    var params = "u=" + u + "&p=" + p;
-	request.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-        if (this.responseText == "Success") {
-          window.location = "http://localhost:8081/adminHome";
-        }
-      };
-    }
-    
-    request.open('POST', 'http://localhost:8081/adminLogin', true);
-    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    request.send(params)
-
-  }
- 
-</script>
-
 </html>

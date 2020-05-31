@@ -13,18 +13,17 @@ majorScheme = require('../Models/majorScheme').majorScheme;
 
 //admin login
 router.post('/', (req, res) => {
-    AdminLogin.findOne({ password: req.body.password, userName: req.body.username }, (err, validAdmin) => {
+    AdminLogin.findOne({ password: req.body.p, userName: req.body.u }, (err, validAdmin) => {
         if (validAdmin == null) {
-            // res.send("Invalid ID or Password");
+            res.send("fail");
             console.log("Invalid ID or Password");
-            res.redirect('/');
+            
         }
         else {
             //client.set(req.sessionID, validAdmin.aId);
             req.session.ID = validAdmin.aId;
             console.log("success");
-            //res.send("success")
-            res.redirect('/admin/adminHome');
+            res.send("success");
         }
     })
 

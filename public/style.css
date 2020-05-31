@@ -77,7 +77,7 @@ body .container .tabs .tab.active a, body .container .tabs .tab:hover a {
 body .container .tabs .tab.active {
   border-bottom: 1px solid #263238;
 }
-body .container .content form {
+body .container .content  {
   position: relative;
   height: 287px;
 }

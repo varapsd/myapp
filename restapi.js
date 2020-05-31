@@ -48,6 +48,14 @@ home sends login page
 app.get('/', (req, res) => {
     res.render('login2.ejs')
 })
+app.post('/facultyLogin',(req,res)=>{
+	AdminLogin.findOne({userName : req.body.u , password : req.body.p},(err,data)=>{
+		if(err) res.send('error');
+		if(data == null) res.send("incorect data");
+		else res.send("sucess");
+	})
+})
+
 //admin
 var admin = require('./routes/admin');
 app.use('/admin',admin);
