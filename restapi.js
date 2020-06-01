@@ -1,10 +1,8 @@
 var express = require('express')
 var mongoose = require('mongoose')
 var app = express();
-//var redis = require("redis");
+
 var session = require('express-session');
-//var redisStore = require('connect-redis')(session);
-//var client = redis.createClient();
 TeacherLogin = require("./Models/teacherLogin").TeacherLogin;
 Teacher = require("./Models/teacher").Teacher;
 Student = require("./Models/student").Student;
@@ -48,17 +46,24 @@ home sends login page
 app.get('/', (req, res) => {
     res.render('login2.ejs')
 })
-app.post('/facultyLogin',(req,res)=>{
-	AdminLogin.findOne({userName : req.body.u , password : req.body.p},(err,data)=>{
-		if(err) res.send('error');
-		if(data == null) res.send("incorect data");
-		else res.send("sucess");
-	})
-})
 
 //admin
 var admin = require('./routes/admin');
 app.use('/admin',admin);
+//teacher
+app.post('/teacherLogin',(req,res)=>{
+	TeacherLogin.findOne({ password : req.body.p , userName : req.body.u},(err,validTeacher)=>{
+		if(validTeacher == null){
+			res.send("falied");
+		}
+		else{
+		    req.session.ID = validTeacher.tId;
+			res.send("Success");
+		}
+	})
+})
+var teacher = require('./routes/teacher');
+app.use('/teacher',teacher)
 //guest
 var guest = require('./routes/guest');
 app.use('/guest',guest);

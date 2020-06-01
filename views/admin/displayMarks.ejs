@@ -31,6 +31,8 @@
   
   <script>
    $(document).ready(function(){
+   	$(".nav-item.active").removeClass("active");
+   	$("#navDisplayMarks").addClass("active");
     $(".marks").click(function(){
     	$("#modelId").text($(this).children(".roll").html());
     	$("#modelName").text($(this).children(".studentName").html());

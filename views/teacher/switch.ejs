@@ -1,0 +1,28 @@
+<div class="row" style="text-align : center">
+<div class="col">
+</div>
+<div class="col-3" style=>
+    <span>switch user: </span>
+    <select class="form-control form-control-sm"> 
+    	<option id="switchGuide">Guide</option>
+		<option id="switchPannel">Pannel</option>
+ 	</select>
+</div>
+<script>
+	var protocol = window.location.protocol;
+	var host = window.location.host;
+	$(document).ready(function(){
+		$("select").on("change",function(){
+			if(this.value == "Pannel"){
+				var url = protocol+"//"+host+"/teacher/pannelHome";
+				window.location = url;
+			
+			}
+			else{
+				var url = protocol+"//"+host+"/teacher/teacherHome";
+				 window.location = url;
+			}
+		})
+	})
+</script>
+</div>

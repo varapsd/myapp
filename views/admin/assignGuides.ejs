@@ -75,6 +75,8 @@
             var request = new XMLHttpRequest();
             var params = "students=" + students + "&teacher=" + teacher;
             request.onreadystatechange = function () {
+				alert(this.status);
+				alert(this.readyState);
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
                     if (this.responseText == "success!") {

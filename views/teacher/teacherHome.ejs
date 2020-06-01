@@ -1,0 +1,91 @@
+
+<html>
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+  #heading{
+   background : #7FFF00;
+}
+#logout:hover{
+	color : white;
+	background : green;
+}
+
+  
+
+  </style>
+  <script>
+  	$(document).ready(function(){
+  		$("select option:selected").removeAttr("selected");
+  		$("#swtichGuide").attr('selected','selected');
+  	})
+  </script>
+</head>
+
+<body>
+<%- include('teacherHeader') %>
+
+<%- include('teacherNav') %>
+    
+<div class="container-fluid">
+<%- include("switch") %>
+
+<div class="col-sm">
+    <h1 style="text-align: center;">Major Project Teams</h1>
+    <table class="table table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Member1</th>
+          <th scope="col">Member2</th>
+          <th scope="col">Member3</th>
+          <th scope="col">Member4</th>
+          <th scope="col">Mid Evaluation</th>
+          <th scope="col">End Evaluation</th>
+          <th scope="col">Delete Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i <  teamNames.length; i++) { %>
+        <tr>
+          <td value="<%= teamNames[i] %>"><%= teamNames[i] %></td>
+          <td value="<%= member1[i] %>"><%= member1[i] %></td>
+          <td value="<%= member2[i] %>"><%= member2[i] %></td>
+          <td value="<%= member3[i] %>"><%= member3[i] %></td>
+          <td value="<%= member4[i] %>"><%= member4[i] %></td>
+          <td><button class="btn btn-success"  id="<%= i %>" onclick="midEval(this.id)">Mid Eval</button></td>
+          <td><button  id="<%= i %>"  class="btn btn-success" onclick="endEval(this.id)">End Eval</button></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <button class="btn btn-success"  onclick="addTeam()">Add Team</button>
+</div>
+  
+
+</body>
+</html>

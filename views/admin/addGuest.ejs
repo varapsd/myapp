@@ -56,8 +56,14 @@
 	       request.send(params)
 
 	   }
+	   
 	</script>
-  
+  	<script>
+  		$(document).ready(function(){
+  			$(".nav-item.active").removeClass("active");
+  			$("#navAddGuest").addClass("active");
+  		})
+  	</script>
 </head>
 
 
@@ -85,6 +91,7 @@
 <p class="h6">username : <span id="username"></span></p>
 <p class="h6">password : <span id="newPass"></span></p>
 </div>
+
 
 </body>
 </html>
