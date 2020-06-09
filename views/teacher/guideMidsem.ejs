@@ -27,7 +27,9 @@
  body{
   background: #FFFFE6;
 }
-  
+  .heading{
+   background : #7FFF00;
+}
 
 
 input.form-control, textarea.form-control { 
@@ -37,25 +39,18 @@ input.form-control, textarea.form-control {
 }
 
   </style>
-	<script>
-		function back(){
-			var protocol = window.location.protocol;
-			var host = window.location.hostname;
-			var port = window.location.port;
-			var url = protocol+"//"+host+":"+port+"/guest/guestHome";
-			window.location = url;
-		}
-	</script>
 
 </head>
 
 <body>
 
-<%- include('guestHeader') %>
+<%- include('teacherHeader') %>
+<%- include('teacherNav') %>
+<div class="container-fluid">
+	<%- include('switch') %>
+</div>
   <div class="container" ng-app="">
-   		<div class="col">
-   			<button class="btn btn-primary" onclick="back()">back</button>
-   		</div>
+   		
 		<div class="col">
 			<p class="h2" style="text-align : center">Mid Sem Evaluation </p>
 		</div>

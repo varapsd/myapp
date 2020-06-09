@@ -1,20 +1,18 @@
-<div class="container-fluid" style="margin-bottom:0;height : 150px;" id='heading'>
+<div class="container-fluid" style="margin-bottom:0;height : 150px;background : #7FFF00; " id='heading'>
   <div class="row" style="height : 150px;padding-left : 2%;padding-right : 2%">
     <div class="col" style="margin-top : auto; margin-bottom : auto">
-      <h1>faculty</h1>
+      <h1>FACULTY</h1>
     </div>
-    <div style="margin-top : auto; margin-bottom : auto; text-align : center ; ">
-      <div class="col" style="float : right ;">
-   		<p class="h5" id="logout" onclick="back()">Logout</p>
-      </div>
+    <div style="margin-top : auto; margin-bottom : auto;">
+      <button class="btn" style="float : right" onclick="logout()">Logout</button>
     </div>
-   </div>
-   <script>
-   	function back(){
-   		var protocol = window.location.protocol;
-   		var host = window.location.host;
-   		var url = protocol+"//"+host+"/teacher/logout";
-   		window.location = url;
-   	}
-   </script>
- </div>
+  </div>
+  <script>
+  	function logout(){
+  		var protocol = window.location.protocol;
+  		var host = window.location.host;
+		var url = protocol+"//"+host+"/teacher/logout"
+  		window.location = url;
+  	}
+  </script>
+</div>

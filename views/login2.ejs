@@ -58,14 +58,14 @@
 	 request.onreadystatechange = function() {
 	     if (this.readyState == 4 && this.status == 200) {
 	     	
-	     	if(request.responseText == "success"){
+	     	if(request.responseText == "Success"){
 	     		window.location = "/admin/adminHome";
 	     	}
 	     	else
 	        	document.getElementById("Aerror").innerHTML = "incorrect details";
 	     }
 	 };
-	 request.open("POST", "/admin", true);
+	 request.open("POST", "/adminLogin", true);
 	 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	 request.send(params)
 	 }
@@ -78,14 +78,14 @@
 	 request.onreadystatechange = function() {
 	     if (this.readyState == 4 && this.status == 200) {
 	     	
-	     	if(request.responseText == "success"){
-	     		window.location = "/guest";
+	     	if(request.responseText == "Success"){
+	     		window.location = "/guest/guestHome";
 	     	}
 	     	else
 	        	document.getElementById("Gerror").innerHTML = "incorrect details";
 	     }
 	 };
-	 request.open("POST", "/guest", true);
+	 request.open("POST", "/guestLogin", true);
 	 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	 request.send(params)
 	 }

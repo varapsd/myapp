@@ -9,17 +9,21 @@ Student = require("./Models/student").Student;
 courseDetails=require("./Models/courseDetails").courseDetails;
 //var cookieParser = require('cookie-parser');
 //app.use(cookieParser());
+
 const bodyParser = require('body-parser');
 var path = require('path')
 app.use(bodyParser.urlencoded({ extended: true }));
-//var url = "mongodb://localhost:27017/";
+
+
 var Team = require("./Models/team").Team;
 var GuestLogin = require("./Models/guestLogin").GuestLogin;
 var AdminLogin = require("./Models/adminLogin").AdminLogin;
 var evaluators=require("./Models/evaluators").evaluators;
 var majorScheme=require("./Models/majorScheme").majorScheme;
+
 //dict = {}
-majorScheme = require('./Models/majorScheme').majorScheme
+
+
 app.use(session({
     secret: 'ssshhhhh',
     // create new redis store.
@@ -44,12 +48,43 @@ db.once('open', function (callback) {
 home sends login page
 */
 app.get('/', (req, res) => {
-    res.render('login2.ejs')
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			res.redirect('/admin/adminHome');
+		}
+		else if(req.session.client == "guest"){
+			res.redirect('/guest/guestHome');
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect('/teacher/teacherHome')
+		}
+		else{
+			res.redirect('/logout');
+		}
+	}
+	else{
+    	res.render('login2.ejs')
+    }
 })
 
 //admin
+app.post('/adminLogin',(req,res)=>{
+	AdminLogin.findOne({ userName : req.body.u , password : req.body.p },(err,validAdmin)=>{
+		if(err) console.log(err);
+		if(validAdmin == null){
+			res.send("failed")
+		}
+		else{
+			req.session.ID = validAdmin.aId;
+			req.session.client = "admin";
+			res.send('Success');
+		}
+	})
+})
+
 var admin = require('./routes/admin');
 app.use('/admin',admin);
+
 //teacher
 app.post('/teacherLogin',(req,res)=>{
 	TeacherLogin.findOne({ password : req.body.p , userName : req.body.u},(err,validTeacher)=>{
@@ -58,13 +93,28 @@ app.post('/teacherLogin',(req,res)=>{
 		}
 		else{
 		    req.session.ID = validTeacher.tId;
+		    req.session.client = "teacher"
 			res.send("Success");
 		}
 	})
 })
 var teacher = require('./routes/teacher');
 app.use('/teacher',teacher)
+
 //guest
+app.post("/guestLogin",(req,res)=>{
+	GuestLogin.findOne({guestName : req.body.u , guestPass : req.body.p},(err,validGuest)=>{
+		if(err) console.log(err);
+		if(validGuest == null){
+			res.send('failed');
+		}
+		else{
+			req.session.ID = validGuest.guestName;
+			req.session.client = "guest";
+			res.send('Success');
+		}
+	})
+})
 var guest = require('./routes/guest');
 app.use('/guest',guest);
        

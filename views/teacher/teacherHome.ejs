@@ -27,17 +27,24 @@
  body{
   background: #FFFFE6;
 }
-  #heading{
-   background : #7FFF00;
-}
-#logout:hover{
-	color : white;
-	background : green;
-}
-
   
-
   </style>
+	<script>
+       function addTeam(){
+	       var url = "./addTeam";
+	       window.location = url;
+      }
+      function midEval(team){
+      	var url = "./guideMidsem/"+team;
+      	window.location = url;
+      }
+      function endEval(team){
+       	var url = "./guideEndsem/"+team;
+       	window.location = url;
+      }
+
+   </script>
+  
   <script>
   	$(document).ready(function(){
   		$("select option:selected").removeAttr("selected");
@@ -77,8 +84,8 @@
           <td value="<%= member2[i] %>"><%= member2[i] %></td>
           <td value="<%= member3[i] %>"><%= member3[i] %></td>
           <td value="<%= member4[i] %>"><%= member4[i] %></td>
-          <td><button class="btn btn-success"  id="<%= i %>" onclick="midEval(this.id)">Mid Eval</button></td>
-          <td><button  id="<%= i %>"  class="btn btn-success" onclick="endEval(this.id)">End Eval</button></td>
+          <td><button class="btn btn-success"  id="<%= teamNames[i] %>" onclick="midEval(this.id)">Mid Eval</button></td>
+          <td><button  id="<%= teamNames[i] %>"  class="btn btn-success" onclick="endEval(this.id)">End Eval</button></td>
         </tr>
         <% } %>
       </tbody>

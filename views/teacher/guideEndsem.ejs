@@ -27,37 +27,29 @@
  body{
   background: #FFFFE6;
 }
-  
+ 
 
 
 input.form-control, textarea.form-control { 
   width: 100%; 
   border : none;
-
+ 
 }
 
   </style>
-	<script>
-		function back(){
-			var protocol = window.location.protocol;
-			var host = window.location.hostname;
-			var port = window.location.port;
-			var url = protocol+"//"+host+":"+port+"/guest/guestHome";
-			window.location = url;
-		}
-	</script>
 
 </head>
 
 <body>
-
-<%- include('guestHeader') %>
-  <div class="container" ng-app="">
-   		<div class="col">
-   			<button class="btn btn-primary" onclick="back()">back</button>
-   		</div>
+<%- include('teacherHeader') %>
+<%- include('teacherNav') %>
+<div class="container-fluid">
+	<%- include('switch') %>
+</div>
+   <div class="container" ng-app="">
+   		
 		<div class="col">
-			<p class="h2" style="text-align : center">Mid Sem Evaluation </p>
+			<p class="h2" style="text-align : center">End Sem Evaluation </p>
 		</div>
 	    <div class="col">
 	      <p><b>Team Name : <span><%= teamName %></span></b></p>

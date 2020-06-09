@@ -12,33 +12,69 @@ var evaluators=require("../Models/evaluators").evaluators;
 majorScheme = require('../Models/majorScheme').majorScheme;
 
 //admin login
-router.post('/', (req, res) => {
-    AdminLogin.findOne({ password: req.body.p, userName: req.body.u }, (err, validAdmin) => {
-        if (validAdmin == null) {
-            res.send("fail");
-            console.log("Invalid ID or Password");
-            
-        }
-        else {
-            //client.set(req.sessionID, validAdmin.aId);
-            req.session.ID = validAdmin.aId;
-            console.log("success");
-            res.send("success");
-        }
-    })
-
-})
 
 router.get('/adminHome', (req, res) => {
-    res.render("./admin/adminHome.ejs");
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			res.render("./admin/adminHome.ejs");
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+    
 })
 
 router.get('/addGuest', (req, res) => {
-    res.render("./admin/addGuest.ejs");
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 res.render("./admin/addGuest.ejs");
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+  
 })
 
 router.get('/assignStudent',(req,res)=>{
-    res.render("./admin/assignStudent.ejs");
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 res.render("./admin/assignStudent.ejs");
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+
+    
 })
 
 /*
@@ -61,11 +97,47 @@ router.post('/addGuest', (req, res) => {
 })
 
 router.get('/setupCourse',(req,res)=>{
-    res.render("./admin/coursestruct2.ejs")
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 res.render("./admin/coursestruct2.ejs");
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+	
+    
 })
 
 router.get('/setCourseDetails',(req,res)=>{
-    res.render("./admin/courseDetails.ejs")
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 res.render("./admin/courseDetails.ejs");
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+
+    
 })
 
 router.post('/setCourseDetails',(req,res)=>{
@@ -86,7 +158,24 @@ router.post('/setCourseDetails',(req,res)=>{
 })
 
 router.get('/setEvaluators',(req,res)=>{
-    res.render("./admin/step2.ejs");
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 res.render("./admin/step2.ejs");
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+    
 })
 
 router.post('/setEvaluators',(req,res)=>{
@@ -107,7 +196,24 @@ router.post('/setEvaluators',(req,res)=>{
 })
 
 router.get('/setEvalScheme',(req,res)=>{
-    res.render("./admin/step3.ejs")
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 res.render("./admin/step3.ejs")
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+    
 })
 
 router.post('/setEvalScheme',(req,res)=>{
@@ -128,29 +234,63 @@ router.post('/setEvalScheme',(req,res)=>{
 })
 
 router.get('/assign',(req,res)=>{
-    res.render("./admin/step4.ejs")
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 res.render("./admin/step4.ejs");
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
 })
 
 
 router.get('/assignGuides',(req,res)=>{
-    teachers=[]
-    students=[]
-    Teacher.find({},(err,Teachers)=>{
-        for (var i = 0; i < Teachers.length; i++){
-            teachers.push(Teachers[i].teacherName)
-        }
-        Student.find({},(err,Students)=>{
-            for (var i = 0; i < Students.length; i++){
-               newStud={
-                   "name":Students[i].studentName,
-                   "roll":Students[i].roll
-               }
-               students.push(newStud)
-            }
-            res.render("./admin/assignGuides.ejs",{teachers:teachers,students:students})
-        })
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			//assign logic 
+		    teachers=[]
+		    students=[]
+		    Teacher.find({},(err,Teachers)=>{
+		        for (var i = 0; i < Teachers.length; i++){
+		            teachers.push(Teachers[i].teacherName)
+		        }
+		        Student.find({},(err,Students)=>{
+		            for (var i = 0; i < Students.length; i++){
+		               newStud={
+		                   "name":Students[i].studentName,
+		                   "roll":Students[i].roll
+		               }
+		               students.push(newStud)
+		            }
+		            res.render("./admin/assignGuides.ejs",{teachers:teachers,students:students})
+		        })
 
-    })
+		    })
+		    //logic ends
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
 })
 
 router.post('/assignGuides',(req,res)=>{
@@ -185,30 +325,64 @@ router.post('/assignGuides',(req,res)=>{
 
 
 router.get('/assignPannel',(req,res)=>{
-    teachers=[]
-    Teacher.find({},(err,Teachers)=>{
-        for (var i = 0; i < Teachers.length; i++){
-           newTeacher={
-               "name":Teachers[i].teacherName,
-               "id":Teachers[i].teacherID
-           }
-           teachers.push(newTeacher)
-        }
-        res.render("./admin/assignPannel.ejs",{teachers:teachers})
-    })
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			 
+		    teachers=[]
+		    Teacher.find({},(err,Teachers)=>{
+		        for (var i = 0; i < Teachers.length; i++){
+		           newTeacher={
+		               "name":Teachers[i].teacherName,
+		               "id":Teachers[i].teacherID
+		           }
+		           teachers.push(newTeacher)
+		        }
+		        res.render("./admin/assignPannel.ejs",{teachers:teachers})
+		    })
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
 
 });
 //display marks
 
 router.get('/displayMarks',(req,res)=>{
-        Student.find({},(err,students)=>{
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			  Student.find({},(err,students)=>{
                 res.render('./admin/displayMarks',{ students : students});
-        })
+        	})
+		}
+		else if(req.session.client == "teacher"){
+			res.redirect("/teacher/teacherHome");
+		}
+		else if(req.session.client == "guest"){
+			res.redirect("/guest/guestHome");
+		}
+		else{
+			res.redirect("/logout")
+		}
+	}
+	else{
+		res.redirect("/");
+	}
+
+//check
 })
 
 router.get('/logout',(req,res)=>{
 	req.session.destroy((err,data)=>{
-		if(err)throw err;
 		res.redirect('/');
 	})
 })

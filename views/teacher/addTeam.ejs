@@ -1,0 +1,109 @@
+
+<html>
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+  #team{
+   background : #FFFFF0;
+}
+
+  #team p{
+   margin : 0;
+   text-align : center;
+}
+
+  </style>
+</head>
+
+<body>
+
+<%- include('teacherHeader') %>
+
+<%- include('teacherNav') %>
+<div class="container" style="margin-top:1%">
+	<div class="row">
+  		<div class="col-sm">
+   			<div class="multisteps-form__panel shadow p-4  rounded" style="background:#F8F8FF;">
+            	<h3 class="multisteps-form__title">Add a New Team </h3>
+                <div class="multisteps-form__content">
+                	<div class="form-row mt-4">
+                    	<div class="col-12 col-sm">
+                      		<div class="form-group row"> 
+                      			<label for="teamName" class="col-sm-3 col-form-label">Team Name</label> 
+                      			<div class="col-sm"> 
+                      				<input type="text" class="form-control" id="teamName" placeholder="enter team name"> 
+                      			</div> 
+                      		</div>
+                    	</div>
+                	</div>
+                 	<div class="form-row mt-4">
+                 		<% for(let i = 0 ; i < 2;i++){ %>
+	                    	<div class="col-12 col-sm">
+	                      		<label for="member<%= i+1 %>">Member <%= i+1 %></label> 
+	                      		<select id="member<%= i+1 %>" class="form-control"> 
+	                      			<option>Choose...</option> 
+	                      			<% for(var j=0; j<students.length;j++){ %>
+	                      				<option><%= students[j].studentName+" ("+students[j].roll+")" %></option>
+	                      			<% } %>
+	                      		</select>
+	                    	</div>
+                    	<% } %>
+                  	</div>
+                 	<div class="form-row mt-4">
+                 		<% for(let i = 0 ; i < 2;i++){ %>
+	                    	<div class="col-12 col-sm">
+	                      		<label for="member<%= i+3 %>">Member <%= i+3 %></label> 
+	                      		<select id="member<%= i+3 %>" class="form-control"> 
+	                      			<option>Choose...</option>
+	                      			<% for(var j=0; j<students.length;j++){ %>
+	                      				<option><%= students[j].studentName+" ("+students[j].roll+")" %></option>
+	                      			<% } %>
+	                      		</select>
+	                    	</div>
+                    	<% } %>
+                  	</div>
+                  	<div class="form-row mt-4">
+                    	<div class="col-12 col-sm-">
+                        	<div class="form-group row"> 
+                        		<label for="desc" class="col-sm-3 col-form-label">Project description</label> 
+                        		<div class="col-sm"> 
+                        			<textarea class="form-control" id="desc" rows="2"></textarea> 
+                        		</div> 
+                        	</div>
+                    	</div>
+                  	</div>
+                  	<div class="button-row" style="text-align : right;">
+						<button class="btn btn-cancel" type="button" title="Cancel">Cancel</button>
+                    	<button class="btn btn-success" type="button" title="Next">Save</button>
+                  	</div>
+               	</div>
+      		</div>
+  		</div>
+	</div>
+</div>
+</body>
+</html>
