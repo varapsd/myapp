@@ -1,6 +1,7 @@
 var express = require('express');
+var multer = require('multer');
 var router = express.Router();
-
+var csvtojson = require('csvtojson');
 TeacherLogin = require("../Models/teacherLogin").TeacherLogin;
 Teacher = require("../Models/teacher").Teacher;
 Student = require("../Models/student").Student;
@@ -10,6 +11,28 @@ var GuestLogin = require("../Models/guestLogin").GuestLogin;
 var AdminLogin = require("../Models/adminLogin").AdminLogin;
 var evaluators=require("../Models/evaluators").evaluators;
 majorScheme = require('../Models/majorScheme').majorScheme;
+
+
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, 'teacher.csv');
+  }
+});
+var storage2 =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, 'student.csv');
+  }
+});
+var upload = multer({ storage : storage}).single('teacher');
+var upload2 = multer({ storage : storage2}).single('student');
+
+
 
 //admin login
 
@@ -264,7 +287,7 @@ router.get('/assignGuides',(req,res)=>{
 		        for (var i = 0; i < Teachers.length; i++){
 		            teachers.push(Teachers[i].teacherName)
 		        }
-		        Student.find({},(err,Students)=>{
+		        Student.find({guideName : { $eq : null}},(err,Students)=>{
 		            for (var i = 0; i < Students.length; i++){
 		               newStud={
 		                   "name":Students[i].studentName,
@@ -380,6 +403,106 @@ router.get('/displayMarks',(req,res)=>{
 
 //check
 })
+var teachers = [];
+router.get('/insertData',(req,res)=>{
+	res.render('./admin/insertData.ejs',{ teachers : teachers});
+});
+router.post('/delTeachers',(req,res)=>{
+	Teacher.remove((err,data)=>{
+		if(err) throw err;
+		res.send("droped teachers");
+	})
+})
+router.post('/insertTeachers',(req,res)=>{
+	Teacher.insertMany(teachers,(err,data)=>{
+		if(err) throw err;
+		teachers = [];
+		res.send('Success');
+	})
+})
+router.post('/insertData',(req,res)=>{
+	upload(req,res,function(err) {
+	        if(err) {
+	        	console.log(err);
+	            return res.end("Error uploading file.");
+	        }
+	        res.redirect('/admin/dataCheck');
+	    });
+})
+router.get('/dataCheck',(req,res)=>{
+	csvtojson()
+	  .fromFile("./public/uploads/teacher.csv")
+	  .then(csvData => {
+	    for(let i = 0; i < csvData.length ; i++){
+	    	var fieldkeys = Object.keys(csvData[0]);
+	    	var teacher = new Teacher({
+	    		teacherID : csvData[i][fieldkeys[0]],
+	    		teacherName : csvData[i][fieldkeys[1]],
+	    		major_teams : [],
+	    		pannel_teachers : []
+	    	})
+	    	teachers.push(teacher);
+	    }
+	    res.redirect('/admin/insertData');
+	    });
+});
+//students list
+var students = [];
+router.get('/students',(req,res)=>{
+	res.render('./admin/studentData.ejs',{ students : students });
+});
+router.post('/delStudents',(req,res)=>{
+	Student.remove((err,data)=>{
+		if(err) throw err;
+		res.send("droped students");
+	})
+})
+router.post('/insertStudents',(req,res)=>{
+	Student.insertMany(students,(err,data)=>{
+		if(err) throw err;
+		students = [];
+		res.send('Success');
+	})
+})
+router.post('/studentData',(req,res)=>{
+	upload2(req,res,function(err) {
+	        if(err) {
+	        	console.log('here err');
+	        	console.log(err);
+	            return res.end("Error uploading file.");
+	        }
+	        res.redirect('/admin/studentDataCheck');
+	    });
+})
+router.get('/studentDataCheck',(req,res)=>{
+	csvtojson()
+	  .fromFile("./public/uploads/student.csv")
+	  .then(csvData => {
+	    for(let i = 0; i < csvData.length ; i++){
+	    	var fieldkeys = Object.keys(csvData[0]);
+	    	var student = new Student({
+	    		roll : csvData[i][fieldkeys[0]],
+	    		studentName : csvData[i][fieldkeys[1]],
+	    		batch : csvData[i][fieldkeys[2]],
+	    		guideName : null,
+	    		teamFromed : false,
+	    		midsemTeacher : null,
+	    		midsemPannel1 : null,
+	    		midsemPannel2 : null,
+	    		midsemPannel3 : null,
+	    		midsemGuest : null,
+	    		endsemTeacher : null,
+	    		endsemPannel1 : null,
+	    		endsemPannel2 : null,
+	    		endsemPannel3 : null,
+	    		endsemGuest : null,
+	    		grade : null
+	    	})
+	    	students.push(student);
+	    }
+	    res.redirect('/admin/students');
+	    });
+});
 
 router.get('/logout',(req,res)=>{
 	req.session.destroy((err,data)=>{

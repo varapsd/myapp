@@ -12,7 +12,13 @@
       </li>
       <li class="nav-item" id="navAddGuest" onclick="navAddGuest()">
         <a class="nav-link" href="#">Add Guest</a>
-      </li>    
+      </li>
+      <li class="nav-item" id="navAddTeachers" onclick="navAddTeachers()">
+        <a class="nav-link" href="#">Add Teachers</a>
+      </li>
+      <li class="nav-item" id="navAddStudents" onclick="navAddStudents()">
+        <a class="nav-link" href="#">Add Students</a>
+      </li>      
     </ul>
   </div>  
 </nav>
@@ -29,6 +35,14 @@
 	}
 	function navAddGuest(){
 		var url = protocol+"//"+host+"/admin/addGuest";
+		window.location = url;
+	}
+	function navAddTeachers(){
+		var url = protocol+"//"+host+"/admin/insertData";
+		window.location = url;
+	}
+	function navAddStudents(){
+		var url = protocol+"//"+host+"/admin/students";
 		window.location = url;
 	}
 </script>

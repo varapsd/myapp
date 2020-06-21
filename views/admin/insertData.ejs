@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+
+  </style>
+	<script>
+		var protocol = window.location.protocol;
+		var host = window.location.host;
+	    function insert(){
+	    alert('helo')
+	    	var url = protocol+"//"+host+"/admin/insertTeachers";
+           var request = new XMLHttpRequest();
+           request.onreadystatechange = function() {
+
+               if (this.readyState == 4 && this.status == 200) {
+					alert(request.responseText);
+               }
+           };
+           request.open("POST",url, true);
+           request.send();
+	    }
+	    function delAll(){
+	    	var url = protocol+"//"+host+'/admin/delTeachers';
+	    	alert(url);
+	    	var request = new XMLHttpRequest();
+	    	request.onreadystatechange = function() {
+	    	 	if (this.readyState == 4 && this.status == 200){
+	    	 		alert(request.responseText);
+	    	 	 }
+	    	  };
+	    	  request.open("POST",url, true);
+	    	  request.send();
+	    }
+	   
+	</script>
+  	<script>
+  		$(document).ready(function(){
+  			$(".nav-item.active").removeClass("active");
+  			$("#navAddTeachers").addClass("active");
+  		})
+  	</script>
+</head>
+
+
+
+<body>
+
+<%- include('adminHeader') %>
+
+<%- include('adminNav') %>
+    
+<div class="container">
+<div class="row">
+	<div class="col"><h3>Drop All teachers : <button class="btn btn-success" onclick="delAll()">Drop</button></h3></div>
+</div>
+	<div class="col" style="text-align : center;">
+		<h3>Insert Teachers using csv file</h3>
+	</div>
+	<form id        =  "uploadForm"
+	     enctype   =  "multipart/form-data"
+	     action    =  "/admin/insertData"
+	     method    =  "post"
+	>
+	  <div class="custom-file">
+	    <input type="file" class="custom-file-input" name='teacher' id="customFile">
+	    <label class="custom-file-label" for="customFile">Choose file</label>
+	  </div>
+	
+	<button type="submit" class="btn btn-success">Fetch Data</button>
+	</form>
+	<% if(teachers.length !=0){ %>
+		<table class="table">
+			<thead>
+				<th>ID</th>
+				<th>name</th>
+			</thead>
+			<% for(let i = 0 ; i < teachers.length ; i++){ %>
+				<tr>
+					<td><%= teachers[i].teacherID %></td>
+					<td><%= teachers[i].teacherName %></td>
+				</tr>
+			<% } %>
+		</table>
+		<div class="col">
+			<button class="btn btn-success" onclick="insert()">upload to database</button>
+		</div>
+	<% } %>
+	<script>
+	// Add the following code if you want the name of the file appear on select
+	$(".custom-file-input").on("change", function() {
+	  var fileName = $(this).val().split("\\").pop();
+	  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
+	</script>
+</div>
+
+
+</body>
+</html>

@@ -37,6 +37,37 @@
 }
 
   </style>
+  <script>
+	function submitDetails(){
+	var request = new XMLHttpRequest();
+	var m1 = document.getElementById('member1').value;
+	var m2 = document.getElementById('member2').value;
+	var m3 = document.getElementById('member3').value;
+	var m4 = document.getElementById('member4').value;
+	var teamName = document.getElementById('teamName').value;
+	var description = document.getElementById('description').value;
+	var params = "member1="+m1+"&member2="+m2+"&member3="+m3+"&member4="+m4+"&teamName="+teamName+"&description="+description;;
+	alert(params);
+	alert(request);
+	
+	 request.onreadystatechange = function() {
+	     if (this.readyState == 4 && this.status == 200) {
+
+	        alert(this.readyState);
+	        alert(request.responseText);
+	      }
+	 };
+	 var protocol = window.location.protocol
+	 var host = window.location.host;
+	 var url = protocol+"//"+host+"/teacher/addMajorTeam";
+	 alert(url);
+	 request.open("POST", url, true);
+	 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	 request.send(params)
+	 
+	 }
+  
+  </script>
 </head>
 
 <body>
@@ -65,9 +96,9 @@
 	                    	<div class="col-12 col-sm">
 	                      		<label for="member<%= i+1 %>">Member <%= i+1 %></label> 
 	                      		<select id="member<%= i+1 %>" class="form-control"> 
-	                      			<option>Choose...</option> 
+	                      			<option value="">Choose...</option> 
 	                      			<% for(var j=0; j<students.length;j++){ %>
-	                      				<option><%= students[j].studentName+" ("+students[j].roll+")" %></option>
+	                      				<option value="<%= students[j].roll %>"><%= students[j].studentName+" ("+students[j].roll+")" %></option>
 	                      			<% } %>
 	                      		</select>
 	                    	</div>
@@ -78,9 +109,9 @@
 	                    	<div class="col-12 col-sm">
 	                      		<label for="member<%= i+3 %>">Member <%= i+3 %></label> 
 	                      		<select id="member<%= i+3 %>" class="form-control"> 
-	                      			<option>Choose...</option>
+	                      			<option value="">Choose...</option>
 	                      			<% for(var j=0; j<students.length;j++){ %>
-	                      				<option><%= students[j].studentName+" ("+students[j].roll+")" %></option>
+	                      				<option value="<%= students[j].roll %>"><%= students[j].studentName+" ("+students[j].roll+")" %></option>
 	                      			<% } %>
 	                      		</select>
 	                    	</div>
@@ -91,14 +122,14 @@
                         	<div class="form-group row"> 
                         		<label for="desc" class="col-sm-3 col-form-label">Project description</label> 
                         		<div class="col-sm"> 
-                        			<textarea class="form-control" id="desc" rows="2"></textarea> 
+                        			<textarea class="form-control" id="description" rows="2"></textarea> 
                         		</div> 
                         	</div>
                     	</div>
                   	</div>
                   	<div class="button-row" style="text-align : right;">
 						<button class="btn btn-cancel" type="button" title="Cancel">Cancel</button>
-                    	<button class="btn btn-success" type="button" title="Next">Save</button>
+                    	<button class="btn btn-success" type="button" onclick="submitDetails()">Save</button>
                   	</div>
                	</div>
       		</div>

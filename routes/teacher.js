@@ -150,6 +150,58 @@ router.get('/addTeam',(req,res)=>{
 })
 
 
+router.post('/addMajorTeam', (req, res) => {
+/*
+    Teacher.findOne({ teacherID: req.session.ID }, (err, validTeacher) => {
+        
+        validTeacher.major_teams.push(req.body.teamName);
+        validTeacher.save();
+        Student.findOne({ roll: req.body.member1 }, (err, validStudent) => {
+            validStudent.teamFormed = true;
+            validStudent.save()
+
+        })
+        Student.findOne({ roll: req.body.member2 }, (err, validStudent) => {
+            validStudent.teamFormed = true;
+            validStudent.save()
+
+        })
+        Student.findOne({ roll: req.body.member3 }, (err, validStudent) => {
+            validStudent.teamFormed = true;
+            validStudent.save()
+
+        })
+        if (req.body.member4 != "None") {
+            Student.findOne({ roll: req.body.member4 }, (err, validStudent) => {
+                validStudent.teamFormed = true;
+                validStudent.save()
+
+            })
+
+        }
+    })
+    var newTeam = new Team(
+        {
+            teamName: req.body.teamName,
+            member1: req.body.member1,
+            member2: req.body.member2,
+            member3: req.body.member3,
+            member4: req.body.member4,
+            project: req.body.project,
+            description: req.body.description
+        });
+    newTeam.save(function (err, team) {
+        if (err) return console.error(err);
+    });*/
+    console.log(req.body.member1+"is here");
+    res.send("added");
+
+})
+
+
+
+
+
 //panel home page
 router.get('/pannelHome', (req, res) => {
 	if(req.session.ID){
