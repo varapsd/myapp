@@ -27,7 +27,6 @@
 		var protocol = window.location.protocol;
 		var host = window.location.host;
 	    function insert(){
-	    alert('helo')
 	    	var url = protocol+"//"+host+"/admin/insertTeachers";
            var request = new XMLHttpRequest();
            request.onreadystatechange = function() {
@@ -41,7 +40,6 @@
 	    }
 	    function delAll(){
 	    	var url = protocol+"//"+host+'/admin/delTeachers';
-	    	alert(url);
 	    	var request = new XMLHttpRequest();
 	    	request.onreadystatechange = function() {
 	    	 	if (this.readyState == 4 && this.status == 200){

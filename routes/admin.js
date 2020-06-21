@@ -404,20 +404,28 @@ router.get('/displayMarks',(req,res)=>{
 //check
 })
 var teachers = [];
+var teachersLogin = [];
 router.get('/insertData',(req,res)=>{
 	res.render('./admin/insertData.ejs',{ teachers : teachers});
 });
 router.post('/delTeachers',(req,res)=>{
 	Teacher.remove((err,data)=>{
 		if(err) throw err;
-		res.send("droped teachers");
+		TeacherLogin.remove((err,data)=>{
+			if(err) throw err;
+			res.send("droped teachers");
+		});
 	})
 })
 router.post('/insertTeachers',(req,res)=>{
 	Teacher.insertMany(teachers,(err,data)=>{
 		if(err) throw err;
-		teachers = [];
-		res.send('Success');
+		TeacherLogin.insertMany(teachersLogin,(err,data)=>{
+			if(err) throw err;
+			teachers = [];
+			teachersLogin =[];
+			res.send('Success');
+		});
 	})
 })
 router.post('/insertData',(req,res)=>{
@@ -442,6 +450,23 @@ router.get('/dataCheck',(req,res)=>{
 	    		pannel_teachers : []
 	    	})
 	    	teachers.push(teacher);
+	    	var loginTeacher = new TeacherLogin({
+	    		tId : teacher.teacherID,
+	    		userName : teacher.teacherName,
+	    		password : teacher.teacherName
+	    	})
+	    	teachersLogin.push(loginTeacher);
+	    	/*
+	    	tId: {
+	    	        type: String
+	    	    },
+	    	    userName:{
+	    	        type: String
+	    	    },
+	    	    password:{
+	    	        type: String
+	    	    }
+	    	*/
 	    }
 	    res.redirect('/admin/insertData');
 	    });
@@ -467,7 +492,6 @@ router.post('/insertStudents',(req,res)=>{
 router.post('/studentData',(req,res)=>{
 	upload2(req,res,function(err) {
 	        if(err) {
-	        	console.log('here err');
 	        	console.log(err);
 	            return res.end("Error uploading file.");
 	        }
