@@ -8,6 +8,7 @@ var MajorScheme = require('../Models/majorScheme').majorScheme;
 
 
 //guestHome Page
+/*
 router.get('/guestHome', (req, res) => {
 	if(req.session.ID){
 		if(req.session.client == "admin"){
@@ -128,6 +129,113 @@ router.get('/endsem/:teamName',(req,res)=>{
 	}
    
 });
+*/
+
+//guest home
+router.get('/guestHome', (req, res) => {
+        if(req.session.ID){
+                if(req.session.client == "admin"){
+                        res.redirect("/admin/adminHome");
+                }
+                else if(req.session.client == "guest"){
+
+					Team.aggregate([
+					 { $lookup:
+					     {
+					       from: "Students",
+					       localField : "students",
+					       foreignField : "roll",
+					       as: "studentsList"
+					     }
+					     }
+					
+					],(err,validTeams)=>{
+					        if(err) throw err;
+					        else{
+					        	res.render('./guest/guestHome.ejs',{
+					        		validTeams : validTeams
+					        	})
+					        }
+					})
+					/*
+                    Team.find({},(err,validTeams)=>{
+                            if(err) throw err;
+                            res.render('./guest/guestHome.ejs',{
+                                    validTeams : validTeams
+                            })
+                    })*/
+                }
+                else if(req.session.client == "teacher"){
+                        res.redirect("/teacher/teacherHome");
+                }
+                else{
+                        res.redirect("/logout");
+                }
+        }
+        else{
+                res.redirect("/");
+        }
+})
+//guide midsem
+router.get('/guestMidsem/:teamName',(req,res)=>{
+        if(req.session.ID){
+                if(req.session.client == "guest"){
+                        Team.findOne({teamId : req.params.teamName},(err,validTeam)=>{
+                        var members = [validTeam.students[0],validTeam.students[1],validTeam.students[2],validTeam.students[3]];
+                        var teamName = validTeam.projectTitle;
+                        var description = validTeam.description;
+                        MajorScheme.findOne({},(err,validScheme)=>{
+                                var fields = validScheme.fields;
+                                res.render('./guest/guestMidsem.ejs',{
+                                        members : members,
+                                        teamName : teamName,
+                                        description : description,
+                                        fields : fields
+                                })
+                        })
+                })
+                }
+                else if( req.session.client == "admin"){
+                        res.redirect('/admin/adminHome')
+                }
+                else if(req.session.client == "teacher"){
+                        res.redirect('/teacher/teacherHome')
+                }
+        }
+        else{
+                res.redirect("/");
+        }
+})
+
+router.get('/guestEndsem/:teamName',(req,res)=>{
+        if(req.session.ID){
+                if(req.session.client == "guest"){
+                        Team.findOne({teamId : req.params.teamName},(err,validTeam)=>{
+                        var members = [validTeam.students[0],validTeam.students[1],validTeam.students[2],validTeam.students[3]];
+                        var teamName = validTeam.projectTitle;
+                        var description = validTeam.description;
+                        MajorScheme.findOne({},(err,validScheme)=>{
+                                var fields = validScheme.fields;
+                                res.render('./guest/guestEndsem.ejs',{
+                                        members : members,
+                                        teamName : teamName,
+                                        description : description,
+                                        fields : fields
+                                })
+                        })
+                })
+                }
+                else if( req.session.client == "admin"){
+                        res.redirect('/admin/adminHome')
+                }
+                else if(req.session.client == "teacher"){
+                        res.redirect('/teacher/teacherHome')
+                }
+        }
+        else{
+                res.redirect("/");
+        }
+})
 
 //logout
 router.get('/logout',(req,res)=>{

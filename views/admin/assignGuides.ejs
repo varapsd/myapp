@@ -64,7 +64,7 @@
             var display = document.getElementById(e.name);
             display.innerHTML = ''; // reset
             getSelectedOptions(e, callback);
-            var str = display.innerHTML.slice(0, -2);
+            var str = display.innerHTML.slice(0, -1);
             display.innerHTML = str;
         };
 
@@ -75,8 +75,6 @@
             var request = new XMLHttpRequest();
             var params = "students=" + students + "&teacher=" + teacher;
             request.onreadystatechange = function () {
-				alert(this.status);
-				alert(this.readyState);
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
                     if (this.responseText == "success!") {
@@ -109,7 +107,7 @@
 
         function callback(e, opt) {
             var display = document.getElementById(e);
-            display.innerHTML += opt.value + ', ';
+            display.innerHTML += opt.value + ',';
         }
 
 

@@ -125,8 +125,8 @@
                                     <% for(var j=0; j<3 ; j++){ %>
                                     <td>
                                         <div class="form-group">
-                                            <select class="form-control" name="<%= i %>">
-                                                <option hidden selected disabled value="">--select name</option>
+                                            <select class="form-control" name="<%= teachers[i].id %>">
+                                                <option hidden selected value="">--select name</option>
                                                 <% for(var k=0 ; k<teachers.length ; k++){ %>
                                                 <% if(i!=k){ %>
                                                 <option value="<%= teachers[k].id %>"><%= teachers[k].name %></option>
@@ -139,7 +139,7 @@
                                     <% } %>
 
 
-                                    <td><button type="button" class="btn btn-primary" id="<%= i %>"
+                                    <td><button type="button" class="btn btn-primary" id="<%= teachers[i].id %>"
                                             onclick="show(this)">submit</button></td>
 
                                 </tr>
@@ -165,7 +165,30 @@
             var x = document.getElementsByName(sel.id);
             if (x[0].value == x[1].value || x[1].value == x[2].value || x[0].value == x[2].value) {
                 alert("invalid");
+                return
             }
+            var list = [];
+            var  i = 0;
+            while(i<3){
+            	if(x[i].value!=""){
+            		list.push(x[i].value);
+            	}
+            	i++;
+            }
+            params = "teacherId="+sel.id+"&list="+list;
+            alert(params);
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                   alert(request.responseText);
+                    
+                }
+            };
+            request.open("POST", "/admin/assignPannel", true);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(params)
         }
     </script>
 

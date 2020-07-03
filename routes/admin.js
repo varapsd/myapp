@@ -317,33 +317,25 @@ router.get('/assignGuides',(req,res)=>{
 })
 
 router.post('/assignGuides',(req,res)=>{
-    students=req.body.students.split(',')
-    var over=-1;
-    Teacher.findOne({teacherName:req.body.teacher},(err,validTeacher)=>{
-        if(err!=null)console.log(err)
-        for(var i=0;i<students.length;i++){
-            students[i]=students[i].trim()
-
-            validTeacher.major_students.push(students[i])
-            console.log(students[1]=="161IT113-C")
-            Student.findOne({roll:students[i]},(err,validStudent)=>{
-                if(err!=null)console.log(err)
-                console.log(validStudent.studentName)
-                console.log(i)
-                validStudent.guideName=req.body.teacher;
-                if(i==students.length-1){
-                    console.log("*")
-                    over=1;
-                }
-            })
-
-        }
-
-    })
-        if(over==1){
-            console.log("heeyy")
-            res.send("success!")
-        }
+    students=req.body.students.split(',');
+    teacher = req.body.teacher;
+	Teacher.findOne({teacherName : teacher},(err,validTeacher)=>{
+		validTeacher.major_students = students;
+		validTeacher.save((err,data)=>{
+			if(err) throw err;
+			Student.update({roll :{$in : students}},[
+				{
+					$set : { guideName : validTeacher.teacherName }
+				}
+			],{
+				multi : true
+			},(err,data)=>{
+				if(err) throw err;
+				console.log("updated");
+				res.send("Success!");
+			})
+		})
+	})    
 })
 
 
@@ -378,6 +370,23 @@ router.get('/assignPannel',(req,res)=>{
 	}
 
 });
+
+router.post("/assignPannel",(req,res)=>{
+	list = req.body.list.split(',');
+	Teacher.findOne({teacherID : req.body.teacherId},(err,validTeacher)=>{
+		if(err) req.send("error occured");
+		else{
+			validTeacher.pannel_teachers = list;
+			validTeacher.save((err)=>{
+				if(err) res.send("error");
+				else{
+					res.send("Pannel assigned!!");
+				}
+			})
+			
+		}
+	})
+})
 //display marks
 
 router.get('/displayMarks',(req,res)=>{
@@ -441,6 +450,7 @@ router.get('/dataCheck',(req,res)=>{
 	csvtojson()
 	  .fromFile("./public/uploads/teacher.csv")
 	  .then(csvData => {
+	  	teachers = [];
 	    for(let i = 0; i < csvData.length ; i++){
 	    	var fieldkeys = Object.keys(csvData[0]);
 	    	var teacher = new Teacher({
@@ -502,6 +512,7 @@ router.get('/studentDataCheck',(req,res)=>{
 	csvtojson()
 	  .fromFile("./public/uploads/student.csv")
 	  .then(csvData => {
+	  	students = [];
 	    for(let i = 0; i < csvData.length ; i++){
 	    	var fieldkeys = Object.keys(csvData[0]);
 	    	var student = new Student({
@@ -509,7 +520,7 @@ router.get('/studentDataCheck',(req,res)=>{
 	    		studentName : csvData[i][fieldkeys[1]],
 	    		batch : csvData[i][fieldkeys[2]],
 	    		guideName : null,
-	    		teamFromed : false,
+	    		teamFormed : false,
 	    		midsemTeacher : null,
 	    		midsemPannel1 : null,
 	    		midsemPannel2 : null,

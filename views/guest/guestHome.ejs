@@ -40,7 +40,7 @@
   		var host = window.location.hostname;
   		var port = window.location.port;
   		var params = i;
-  		var url = protocol + "//"+host+":"+port+"/guest/midsem/"+params;
+  		var url = protocol + "//"+host+":"+port+"/guest/guestMidsem/"+params;
   		window.location = url;
   	}
   	function endEval(i){
@@ -48,7 +48,7 @@
   		var host = window.location.hostname;
   		var port = window.location.port;
   		var params = i;
-  		var url = protocol + "//"+host+":"+port+"/guest/endsem/"+params;
+  		var url = protocol + "//"+host+":"+port+"/guest/guestEndsem/"+params;
   		window.location = url;
   	}
   </script>
@@ -60,32 +60,32 @@
     
 <div class="col-sm">
     <h1 style="text-align: center;">Teams</h1>
+    <div class="table-responsive">
     <table class="table table-sm">
       <thead class="thead-dark">
         <tr>
           <th scope="col">Name</th>
-          <th scope="col">Member1</th>
-          <th scope="col">Member2</th>
-          <th scope="col">Member3</th>
-          <th scope="col">Member4</th>
+          <th scope="col">Members</th>
           <th scope="col">Mid Evaluation</th>
           <th scope="col">End Evaluation</th>
         </tr>
       </thead>
       <tbody>
-        <% for (var i = 0; i <  teamNames.length; i++) { %>
+        <% for (var i = 0; i <  validTeams.length; i++) { %>
         <tr>
-          <td value="<%= teamNames[i] %>"><%= teamNames[i] %></td>
-          <td value="<%= member1[i] %>"><%= member1[i] %></td>
-          <td value="<%= member2[i] %>"><%= member2[i] %></td>
-          <td value="<%= member3[i] %>"><%= member3[i] %></td>
-          <td value="<%= member4[i] %>"><%= member4[i] %></td>
-          <td><button class="btn btn-success"  id="<%= teamNames[i] %>" onclick="midEval(this.id)">Mid Eval</button></td>
-          <td><button  id="<%= teamNames[i] %>"  class="btn btn-success" onclick="endEval(this.id)">End Eval</button></td>
+          <td><%= validTeams[i].projectTitle %></td>
+          <td>
+          	<% for(let j = 0; j < validTeams[i].students.length;j++){ %>
+          		<span><%= validTeams[i].studentsList[j].studentName %></span><br>
+          	<% } %>
+          </td>
+          <td><button class="btn btn-success"  id="<%= validTeams[i].teamId %>" onclick="midEval(this.id)">Mid Eval</button></td>
+          <td><button  id="<%= validTeams[i].teamId %>"  class="btn btn-success" onclick="endEval(this.id)">End Eval</button></td>
         </tr>
         <% } %>
       </tbody>
     </table>
+    </div>
     
 </div>
  

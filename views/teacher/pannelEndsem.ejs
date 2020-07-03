@@ -1,0 +1,99 @@
+
+<html>
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+  <style>
+ body{
+  background: #FFFFE6;
+}
+ 
+
+
+input.form-control, textarea.form-control { 
+  width: 100%; 
+  border : none;
+ 
+}
+
+  </style>
+
+</head>
+
+<body>
+<%- include('teacherHeader') %>
+<%- include('teacherNav') %>
+<div class="container-fluid">
+	<%- include('switch') %>
+</div>
+   <div class="container" ng-app="">
+   		
+		<div class="col">
+			<p class="h2" style="text-align : center">End Sem Evaluation </p>
+		</div>
+	    <div class="col">
+	      <p><b>Team Name : <span><%= teamName %></span></b></p>
+	    </div>
+	    <div class="col">
+	      <p><b>Project Description : <span><%= description %></span></b></p>
+	    </div>
+          
+           <table class="table table-bordered w-auto" style="background : white">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Name</th>
+                      <% for(let i = 0;i<fields.length;i++) { %>
+                           <th scope="col"><%= fields[i] %></th>
+                      <% } %>
+                      <th scope="col">Comment</th>
+                      <th scope="col">Total</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                <tbody>
+                   <% for(let i = 0 ; i < members.length ; i++) { %>
+                   		<% if(members[i]==null){ continue ; } %>
+                           <tr>
+                                   <th scope="row"><%= members[i] %></th>
+                                   <% for(let j=0; j<fields.length ; j++) { %>
+                                           <td><input type="number" class="form-control shadow-none" ng-model="a<%= members[i]+j %>"></td>
+                                   <% } %>
+                                   <td><textarea class="form-control shadow-none" rows="1"></textarea></td>
+                                   <td>
+                                       <p id="i"> {{ <% for(let k = 0; k<fields.length ; k++) { %>
+                                                           <% if(k!=0) {%>
+                                                                   +
+                                                           <% } %>
+                                                           (a<%= members[i]+k %>)
+                                                   <% } %> }}</p>
+                                   </td>
+                                   <td><button class="btn btn-success" onclick="fun1()">submit</button></td>
+                           </tr>
+                   <% } %>
+             </tbody>
+           </table>
+   </div>
+
+</body>
+
+</html>
