@@ -65,7 +65,7 @@ input.form-control, textarea.form-control {
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">Name</th>
-                      <% for(let i = 0;i<fields.length;i++) { %>
+                      <% for(let i = 0;i < fields.length;i++) { %>
                            <th scope="col"><%= fields[i] %></th>
                       <% } %>
                       <th scope="col">Comment</th>
@@ -78,12 +78,12 @@ input.form-control, textarea.form-control {
                    		<% if(members[i]==null){ continue ; } %>
                            <tr>
                                    <th scope="row"><%= members[i] %></th>
-                                   <% for(let j=0; j<fields.length ; j++) { %>
-                                           <td><input type="number" class="form-control shadow-none" ng-model="a<%= members[i]+j %>"></td>
+                                   <% for(let j=0; j< fields.length ; j++) { %>
+                                           <td><input type="number" class="form-control shadow-none" ng-model="a<%= members[i]+j %>" name="<%= fields[j].split('-')[1] %>" onchange="myValidation(this)"></td>
                                    <% } %>
                                    <td><textarea class="form-control shadow-none" rows="1"></textarea></td>
                                    <td>
-                                       <p id="i"> {{ <% for(let k = 0; k<fields.length ; k++) { %>
+                                       <p id="i"> {{ <% for(let k = 0; k< fields.length ; k++) { %>
                                                            <% if(k!=0) {%>
                                                                    +
                                                            <% } %>
@@ -95,7 +95,21 @@ input.form-control, textarea.form-control {
                    <% } %>
              </tbody>
            </table>
-   </div>
+   
+   <p style="color: red;">* check the maximum value</p>
+ </div>
+   <script type="text/javascript">
+  function myValidation(e){
+    if (Number(e.value) <= Number(e.name)) {
+      console.log(Number(e.value) +" and  " + Number(e.name))
+      e.style.border = "";
+    }
+    else{
+      console.log(Number(e.value) + " and " + Number(e.name))
+      e.style.border = "solid red";
+    }
+  }
+</script>
 
 </body>
 
