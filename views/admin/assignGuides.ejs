@@ -37,6 +37,18 @@
             background: #F5F5DC;
 
         }
+        .select2-selection--multiple{
+            height: 10px;
+        }
+        .select2-selection__rendered {
+            height: 20px;
+        }
+        .select2-container .select2-results_option.hide{
+            display: none;
+        }
+        #hide{
+            display: none;
+        }
     </style>
 
     <script>
@@ -167,7 +179,7 @@
                                 <tr>
                                     <form>
                                         <td><%= teachers[i] %></td>
-                                        <td style="padding:0;width:30%;">
+                                        <td style="padding:0;width : 30%;">
                                             <select name="<%= i %>" class="flow-control" id="demoSel"
                                                 style="width:100%;height:30px;" onchange="drop(this)" multiple>
                                                 <% for(var j=0; j<students.length ; j++){ %>
@@ -201,6 +213,8 @@
 
 
 </body>
+<script type="text/javascript">
+</script>
 
 <script>
 

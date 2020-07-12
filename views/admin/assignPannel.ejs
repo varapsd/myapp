@@ -36,6 +36,9 @@
             background: #F5F5DC;
 
         }
+        #hide{
+        	display: none;
+        }
     </style>
 
     <script>
@@ -113,33 +116,62 @@
 
                             <thead>
                                 <th scope="row">Teacher Name</th>
-                                <th scope="row">panel member 1</th>
-                                <th scope="row">panel member 2</th>
-                                <th scope="row">panel member 3</th>
+                                <th scope="row">Panel members</th>
                                 <th scope="row"></th>
                                 </head>
                             <tbody>
                                 <% for (var i=0; i<teachers.length ; i++){ %>
                                 <tr>
-                                    <td><%= teachers[i].name %></td>
-                                    <% for(var j=0; j<3 ; j++){ %>
+                                    <td class="align-middle"><%= teachers[i].name %></td>
                                     <td>
-                                        <div class="form-group">
-                                            <select class="form-control" name="<%= teachers[i].id %>">
-                                                <option hidden selected value="">--select name</option>
-                                                <% for(var k=0 ; k<teachers.length ; k++){ %>
-                                                <% if(i!=k){ %>
-                                                <option value="<%= teachers[k].id %>"><%= teachers[k].name %></option>
-                                                <% } %>
-                                                <% } %>
-                                            </select>
-                                        </div>
+                                    	<table class="table table-borderless">
+                                    	<tr>
+	                                    <% for(var j=0; j<3 ; j++){ %>
+	                                    <td>
+	                                        <div class="form-group">
+	                                        	<label for="<%= i %>">Pannel member <%= j+1 %></label>
+	                                            <select class="form-control" id="<%= i %>" name="<%= teachers[i].id %>" onchange="myValidation(this)">
+	                                                <option selected value="">--select name</option>
+	                                                <% for(var k=0 ; k < teachers.length ; k++){ %>
+	                                                
+	                                                <option value="<%= teachers[k].id %>" <% if(i!=k){ %>
+	                                                		id="show"
+	                                                	<% }else{ %>
+	                                                		id="hide"
+	                                                	<% } %> ><%= teachers[k].name %></option>
+	                                                <% } %>
+	                                            </select>
+	                                        </div>
 
-                                    </td>
-                                    <% } %>
+	                                    </td>
+	                                    <% } %>
+	                                	</tr>
+	                                	<tr>
+	                                    <% for(var j=0; j<3 ; j++){ %>
+	                                    <td>
+	                                        <div class="form-group">
+	                                        	<label for="<%= i %>">Pannel member <%= j+4 %></label>
+	                                            <select class="form-control" id="<%= i %>" name="<%= teachers[i].id %>" onchange="myValidation(this)">
+	                                                <option selected value="">--select name</option>
+	                                                <% for(var k=0 ; k < teachers.length ; k++){ %>
+	                                                
+	                                                <option value="<%= teachers[k].id %>" <% if(i!=k){ %>
+	                                                		id="show"
+	                                                	<% }else{ %>
+	                                                		id="hide"
+	                                                	<% } %> ><%= teachers[k].name %></option>
+	                                                <% } %>
+	                                            </select>
+	                                        </div>
+
+	                                    </td>
+	                                    <% } %>
+	                                	</tr>
+	                                </table>
+	                                 </td>
 
 
-                                    <td><button type="button" class="btn btn-primary" id="<%= teachers[i].id %>"
+                                    <td class="align-middle"><button type="button" class="btn btn-primary" id="<%= teachers[i].id %>"
                                             onclick="show(this)">submit</button></td>
 
                                 </tr>
@@ -160,23 +192,41 @@
     </div>
 
     <script>
-
+    	function myValidation(e){
+    		var y = document.getElementsByName(e.name);
+    		for(let i=0;i<y.length;i++){
+    			for(let j=0;j<y[i].options.length;j++){
+    				var z = Number(e.id)+1;
+    				if(j!=z){
+    					y[i].options[j].setAttribute("id","show");
+    				}
+    			}
+    		}
+    		for(let i=0;i<y.length;i++){
+    			var selected = y[i].selectedIndex;
+    			for( let j=0;j<y.length;j++){
+    				if(selected!=0 && j!=i){
+    					y[j].options[selected].setAttribute("id","hide");
+    				}
+    			}
+    		}
+    	}
         function show(sel) {
             var x = document.getElementsByName(sel.id);
-            if (x[0].value == x[1].value || x[1].value == x[2].value || x[0].value == x[2].value) {
-                alert("invalid");
-                return
-            }
             var list = [];
             var  i = 0;
-            while(i<3){
+            while(i<x.length){
             	if(x[i].value!=""){
             		list.push(x[i].value);
             	}
             	i++;
             }
+            if(list.length==0){
+            	alert("select atleast one panel member !!");
+            	return;
+            }
             params = "teacherId="+sel.id+"&list="+list;
-            alert(params);
+            
             var request = new XMLHttpRequest();
             request.onreadystatechange = function() {
 
@@ -189,6 +239,7 @@
             request.open("POST", "/admin/assignPannel", true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send(params)
+            
         }
     </script>
 
