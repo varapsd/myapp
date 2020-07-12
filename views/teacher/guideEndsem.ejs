@@ -100,11 +100,9 @@ input.form-control, textarea.form-control {
 <script type="text/javascript">
   function myValidation(e){
     if (Number(e.value) <= Number(e.name)) {
-      console.log(Number(e.value) +" and  " + Number(e.name))
       e.style.border = "";
     }
     else{
-      console.log(Number(e.value) + " and " + Number(e.name))
       e.style.border = "solid red";
     }
   }
