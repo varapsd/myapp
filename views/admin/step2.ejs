@@ -51,6 +51,10 @@
             var pw = document.getElementById("pw").value;
             var nt = document.getElementById("nt").value;
             var tw = document.getElementById("tw").value;
+            if(gw=="" || np=="" || pw == "" || nt == "" || tw == ""){
+                alert("all firelds are required");
+                return;
+            }
             var params = "gw=" + gw + "&np=" + np + "&pw=" + pw + "&nt=" + nt + "&tw=" + tw;
             request.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -61,7 +65,7 @@
             request.open('POST', url, false);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send(params);
-
+            
         }
     </script>
 
@@ -111,27 +115,27 @@
                     <div class="form-row mt-4">
                         <div class="col-12 col-sm-6">
                             <input class="multisteps-form__input form-control" id="gw" type="number"
-                                placeholder="Guide Weightage" />
+                                placeholder="Guide Weightage *" />
                         </div>
                         <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                             <input class="multisteps-form__input form-control" id="np"type="number"
-                                placeholder="Number of pannel members(Maximum 3)" />
+                                placeholder="Number of pannel members(Maximum 3) *" />
                         </div>
                     </div>
                     <div class="form-row mt-4">
                         <div class="col-12 col-sm-6">
                             <input class="multisteps-form__input form-control" id="pw" type="number"
-                                placeholder="Pannel Wieghtage" />
+                                placeholder="Pannel Wieghtage *" />
                         </div>
                         <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                             <input class="multisteps-form__input form-control" id="nt" type="number"
-                                placeholder="Number of TA's" />
+                                placeholder="Number of TA's *" />
                         </div>
                     </div>
                     <div class="form-row mt-4">
                         <div class="col-12 col-sm-6">
                             <input class="multisteps-form__input form-control" id="tw" type="number"
-                                placeholder="TA weightage" />
+                                placeholder="TA weightage *" />
                         </div>
                     </div>
                     <div class="button-row d-flex mt-4">

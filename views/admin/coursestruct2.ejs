@@ -25,6 +25,9 @@
             background: #F5F5DC;
 
         }
+        #mand{
+            color: red;
+        }
     </style>
 
     <script>
@@ -53,6 +56,11 @@
             var hours = document.getElementById("hours").value;
             var credits = document.getElementById("credits").value;
             var name = document.getElementById("name").value;
+            if (code=="" || instructor=="" || hours=="" || credits==""||name=="") {
+                alert("all fields are required");
+                return;
+            }
+            
             var params = "code=" + code + "&name=" + name + "&credits=" + credits + "&hours=" + hours + "&instructor=" + instructor;
             request.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -65,6 +73,7 @@
             request.open('POST', url, false);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send(params);
+            
         }
     </script>
 </head>
@@ -113,31 +122,31 @@
                     <div class="form-row mt-4">
                         <div class="col-12 col-sm-6">
                             <input class="multisteps-form__input form-control" type="text" id="name"
-                                placeholder="Course Name" />
+                                placeholder="Course Name *" />
                         </div>
                         <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                             <input class="multisteps-form__input form-control" type="text" id="code"
-                                placeholder="Course Code" />
+                                placeholder="Course Code *" />
                         </div>
                     </div>
                     <div class="form-row mt-4">
                         <div class="col-12 col-sm-6">
                             <input class="multisteps-form__input form-control" type="text" id="instructor"
-                                placeholder="Course Instructor" />
+                                placeholder="Course Instructor *" />
                         </div>
                         <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                             <input class="multisteps-form__input form-control" type="text" id="hours"
-                                placeholder="Number of hours(Per week)" />
+                                placeholder="Number of hours(Per week) *" />
                         </div>
                     </div>
                     <div class="form-row mt-4">
                         <div class="col-12 col-sm-6">
                             <input class="multisteps-form__input form-control" type="text" id="credits"
-                                placeholder="Course credits" />
+                                placeholder="Course credits *" />
                         </div>
                         <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                             <input class="multisteps-form__input form-control" type="text"
-                                placeholder="Minimum attendance" />
+                                placeholder="Minimum attendance *" />
                         </div>
                     </div>
                     <div class="button-row d-flex mt-4">

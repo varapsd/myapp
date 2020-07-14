@@ -240,13 +240,8 @@ router.get('/setEvalScheme',(req,res)=>{
 })
 
 router.post('/setEvalScheme',(req,res)=>{
-    req_fields=[]
-    req_fields.push(req.body.f1);
-    req_fields.push(req.body.f2);
-    req_fields.push(req.body.f3);
-    req_fields.push(req.body.f4);
-    req_fields.push(req.body.f5);
-    req_fields.push(req.body.f6);
+    //req_fields=[];
+    req_fields=req.body.schemeList.split(",");
     majorScheme.findOne({},(err,newEvalScheme)=>{
         newEvalScheme.fields=req_fields,
         newEvalScheme.save(function (err, team) {
@@ -254,6 +249,7 @@ router.post('/setEvalScheme',(req,res)=>{
         });
         res.send("added");
     });
+    
 })
 
 router.get('/assign',(req,res)=>{
@@ -281,8 +277,8 @@ router.get('/assignGuides',(req,res)=>{
 	if(req.session.ID){
 		if(req.session.client == "admin"){
 			//assign logic 
-		    teachers=[]
-		    students=[]
+		    let teachers=[]
+		    let students=[]
 		    Teacher.find({},(err,Teachers)=>{
 		        for (var i = 0; i < Teachers.length; i++){
 		            teachers.push(Teachers[i].teacherName)
@@ -412,10 +408,10 @@ router.get('/displayMarks',(req,res)=>{
 
 //check
 })
-var teachers = [];
+var teachers1 = [];
 var teachersLogin = [];
 router.get('/insertData',(req,res)=>{
-	res.render('./admin/insertData.ejs',{ teachers : teachers});
+	res.render('./admin/insertData.ejs',{ teachers : teachers1});
 });
 router.post('/delTeachers',(req,res)=>{
 	Teacher.remove((err,data)=>{
@@ -427,11 +423,11 @@ router.post('/delTeachers',(req,res)=>{
 	})
 })
 router.post('/insertTeachers',(req,res)=>{
-	Teacher.insertMany(teachers,(err,data)=>{
+	Teacher.insertMany(teachers1,(err,data)=>{
 		if(err) throw err;
 		TeacherLogin.insertMany(teachersLogin,(err,data)=>{
 			if(err) throw err;
-			teachers = [];
+			teachers1 = [];
 			teachersLogin =[];
 			res.send('Success');
 		});
@@ -450,7 +446,7 @@ router.get('/dataCheck',(req,res)=>{
 	csvtojson()
 	  .fromFile("./public/uploads/teacher.csv")
 	  .then(csvData => {
-	  	teachers = [];
+	  	teachers1 = [];
 	    for(let i = 0; i < csvData.length ; i++){
 	    	var fieldkeys = Object.keys(csvData[0]);
 	    	var teacher = new Teacher({
@@ -459,7 +455,7 @@ router.get('/dataCheck',(req,res)=>{
 	    		major_teams : [],
 	    		pannel_teachers : []
 	    	})
-	    	teachers.push(teacher);
+	    	teachers1.push(teacher);
 	    	var loginTeacher = new TeacherLogin({
 	    		tId : teacher.teacherID,
 	    		userName : teacher.teacherName,
@@ -482,9 +478,9 @@ router.get('/dataCheck',(req,res)=>{
 	    });
 });
 //students list
-var students = [];
+var students1 = [];
 router.get('/students',(req,res)=>{
-	res.render('./admin/studentData.ejs',{ students : students });
+	res.render('./admin/studentData.ejs',{ students : students1 });
 });
 router.post('/delStudents',(req,res)=>{
 	Student.remove((err,data)=>{
@@ -493,9 +489,9 @@ router.post('/delStudents',(req,res)=>{
 	})
 })
 router.post('/insertStudents',(req,res)=>{
-	Student.insertMany(students,(err,data)=>{
+	Student.insertMany(students1,(err,data)=>{
 		if(err) throw err;
-		students = [];
+		students1 = [];
 		res.send('Success');
 	})
 })
@@ -512,7 +508,7 @@ router.get('/studentDataCheck',(req,res)=>{
 	csvtojson()
 	  .fromFile("./public/uploads/student.csv")
 	  .then(csvData => {
-	  	students = [];
+	  	students1 = [];
 	    for(let i = 0; i < csvData.length ; i++){
 	    	var fieldkeys = Object.keys(csvData[0]);
 	    	var student = new Student({
@@ -533,7 +529,7 @@ router.get('/studentDataCheck',(req,res)=>{
 	    		endsemGuest : null,
 	    		grade : null
 	    	})
-	    	students.push(student);
+	    	students1.push(student);
 	    }
 	    res.redirect('/admin/students');
 	    });
