@@ -3,6 +3,7 @@ var router = express.Router();
 var GuestLogin = require('../Models/guestLogin').GuestLogin;
 var Team = require('../Models/team').Team;
 var MajorScheme = require('../Models/majorScheme').majorScheme;
+var Studnet = require('../Models/student').Student;
 //guest 
 //guestLogin session
 
@@ -205,6 +206,20 @@ router.get('/guestMidsem/:teamName',(req,res)=>{
         else{
                 res.redirect("/");
         }
+})
+router.post('/guestMidsem',(req,res)=>{
+	Student.findOne({roll : req.body.studentId},(err,validStudent)=>{
+		if(err) res.send("error occuered");
+		else{
+			validStudent.midsemGuest = req.body.total;
+			validStudent.save((err,data)=>{
+				if(err) res.send("error occuered");
+				else{
+					res.send("marks added successfully !");
+				}
+			})
+		}
+	})
 })
 
 router.get('/guestEndsem/:teamName',(req,res)=>{

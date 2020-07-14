@@ -38,13 +38,36 @@ input.form-control, textarea.form-control {
 
   </style>
 	<script>
+    var protocol = window.location.protocol;
+    var host = window.location.host;
 		function back(){
-			var protocol = window.location.protocol;
-			var host = window.location.hostname;
-			var port = window.location.port;
-			var url = protocol+"//"+host+":"+port+"/guest/guestHome";
+			var url = protocol+"//"+host+"/guest/guestHome";
 			window.location = url;
 		}
+    function submitScore(e){
+       var y = document.getElementsByName(e.id);
+       for (let i =0; i<y.length;i++){
+        if(y[i].value > y[i].id){
+          alert("check maximum marks !");
+          return;
+        }
+       }
+       var total = Number(document.getElementById('total'+e.id).innerHTML);
+       var comments = document.getElementById('comment'+e.id).value;
+       var studentId = e.value;
+       var params = "total="+total+"&comments="+comments+"&studentId="+studentId;
+       var request = new XMLHttpRequest();
+       var url = protocol+"//"+host+"/guest/guestMidsem";
+       alert(url);
+        request.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200){
+            alert(request.responseText);
+           }
+          };
+          request.open("POST",url, true);
+          request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          request.send(params);
+    }
 	</script>
 
 </head>
@@ -84,18 +107,18 @@ input.form-control, textarea.form-control {
                            <tr>
                                    <th scope="row"><%= members[i] %></th>
                                    <% for(let j=0; j < fields.length ; j++) { %>
-                                           <td><input type="number" class="form-control shadow-none" ng-model="a<%= members[i]+j %>" name="<%= fields[j].split('-')[1] %>" onchange="myValidation(this)" ></td>
+                                           <td><input type="number" class="form-control shadow-none" ng-model="a<%= members[i]+j %>" name="<%= i %>" id="<%= fields[j].split('-')[1] %>" onchange="myValidation(this)" ></td>
                                    <% } %>
-                                   <td><textarea class="form-control shadow-none" rows="1"></textarea></td>
+                                   <td><textarea class="form-control shadow-none" id="<%= 'comment'+i %>"rows="1"></textarea></td>
                                    <td>
-                                       <p id="i"> {{ <% for(let k = 0; k< fields.length ; k++) { %>
+                                       <p id="<%= 'total'+i %>"> {{ <% for(let k = 0; k< fields.length ; k++) { %>
                                                            <% if(k!=0) {%>
                                                                    +
                                                            <% } %>
                                                            (a<%= members[i]+k %>)
                                                    <% } %> }}</p>
                                    </td>
-                                   <td><button class="btn btn-success" onclick="fun1()">submit</button></td>
+                                   <td><button class="btn btn-success" id ="<%= i %>" value="<%= members[i] %>"onclick="submitScore(this)">submit</button></td>
                            </tr>
                    <% } %>
              </tbody>
@@ -104,7 +127,7 @@ input.form-control, textarea.form-control {
    </div>
 <script type="text/javascript">
 	function myValidation(e){
-		if (Number(e.value) <= Number(e.name)) {
+		if (Number(e.value) <= Number(e.id)) {
 			e.style.border = "";
 		}
 		else{

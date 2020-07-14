@@ -19,30 +19,14 @@ var studentSchema= mongoose.Schema({
     midsemTeacher:{
         type:Number
     },
-    midsemPannel1:{
-        type:Number
-    },
-    midsemPannel2:{
-        type:Number
-    },
-    midsemPannel3:{
-        type:Number
-    },
+    midsemPannel : [ Number ],
     midsemGuest:{
         type:Number
     },
     endsemTeacher:{
         type: Number
     },
-    endsemPannel1:{
-        type: Number
-    },
-    endsemPannel2:{
-        type: Number
-    },
-    endsemPannel3:{
-        type: Number
-    },
+    endsemPannel : [ Number ],
     endsemGuest:{
         type: Number
     },
@@ -52,5 +36,5 @@ var studentSchema= mongoose.Schema({
 });
 // Export Team model
  module.exports = {
-     Student:mongoose.model('Student',studentSchema,"Students"),
+     Student:mongoose.model('Student',studentSchema,"Students")
 }

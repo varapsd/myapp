@@ -90,6 +90,12 @@ router.get('/guideMidsem/:teamName',(req,res)=>{
 		res.redirect("/");
 	}
 })
+// assign marks
+router.post('/guideMidsem',(res,req)=>{
+	console.log(req.body.studentId);
+	console.log(req.body.total);
+	console.log(req.body.comments);
+})
 
 router.get('/guideEndsem/:teamName',(req,res)=>{
 	if(req.session.ID){
