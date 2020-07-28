@@ -164,7 +164,22 @@ router.get('/setCourseDetails',(req,res)=>{
 })
 
 router.post('/setCourseDetails',(req,res)=>{
+    newCourse = new courseDetails({
+    	courseName : req.body.name,
+    	courseCode : req.body.code,
+    	courseInstructor : req.body.instructor,
+    	courseCredits : req.body.credits,
+    	hoursPerWeek : req.body.hours
+    });
+    newCourse.save((err)=>{
+    	if(err) res.send("error occured");
+    	else{
+    		res.send("added");
+    	}
+    })
+    /*
     courseDetails.findOne({},(err,newCourse)=>{
+    		if(err) throw err;
             newCourse.courseName= req.body.name,
             newCourse.courseCode= req.body.code,
             newCourse.courseInstructor= req.body.instructor,
@@ -175,7 +190,7 @@ router.post('/setCourseDetails',(req,res)=>{
             });
             res.send("added");
         });
-
+	*/
 
 
 })
@@ -202,6 +217,20 @@ router.get('/setEvaluators',(req,res)=>{
 })
 
 router.post('/setEvaluators',(req,res)=>{
+	newEvaluators = new evaluators({
+		guideWeightage : req.body.gw,
+		pannelNum : req.body.np,
+		pannelWeightage : req.body.pw,
+		taNum : req.body.nt,
+		taWeightage : req.body.tw
+	});
+	newEvaluators.save((err)=>{
+		if(err) res.send("error occuered");
+		else{
+			res.send("added");
+		}
+	})
+	/*
     evaluators.findOne({},(err,newEvaluators)=>{
 
         newEvaluators.guideWeightage= req.body.gw,
@@ -215,6 +244,7 @@ router.post('/setEvaluators',(req,res)=>{
     })
     router.send("added");
 })
+*/
 
 })
 
@@ -518,14 +548,10 @@ router.get('/studentDataCheck',(req,res)=>{
 	    		guideName : null,
 	    		teamFormed : false,
 	    		midsemTeacher : null,
-	    		midsemPannel1 : null,
-	    		midsemPannel2 : null,
-	    		midsemPannel3 : null,
+	    		midsemPannel : [-1,-1,-1,-1,-1,-1],
 	    		midsemGuest : null,
 	    		endsemTeacher : null,
-	    		endsemPannel1 : null,
-	    		endsemPannel2 : null,
-	    		endsemPannel3 : null,
+	    		endsemPannel : [-1,-1,-1,-1,-1,-1],
 	    		endsemGuest : null,
 	    		grade : null
 	    	})

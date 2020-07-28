@@ -19,14 +19,14 @@ var studentSchema= mongoose.Schema({
     midsemTeacher:{
         type:Number
     },
-    midsemPannel : [ Number ],
+    midsemPannel : [Number],
     midsemGuest:{
         type:Number
     },
     endsemTeacher:{
         type: Number
     },
-    endsemPannel : [ Number ],
+    endsemPannel : [Number],
     endsemGuest:{
         type: Number
     },

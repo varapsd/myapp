@@ -252,6 +252,21 @@ router.get('/guestEndsem/:teamName',(req,res)=>{
         }
 })
 
+router.post('/guestEndsem',(req,res)=>{
+	Student.findOne({roll : req.body.studentId},(err,validStudent)=>{
+		if(err) res.send("error occuered");
+		else{
+			validStudent.endsemGuest = req.body.total;
+			validStudent.save((err,data)=>{
+				if(err) res.send("error occuered");
+				else{
+					res.send("marks added successfully !");
+				}
+			})
+		}
+	})
+})
+
 //logout
 router.get('/logout',(req,res)=>{
 	req.session.destroy((err,data)=>{

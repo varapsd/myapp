@@ -81,7 +81,9 @@
         };
 
         function submitStudents(ele) {
-
+            var protocol = window.location.protocol;
+            var host = window.location.host;
+            var url1 = protocol+"//"+host+"/admin/assignGuides";
             var teacher=ele.id;
             var students = document.getElementById(ele.name).value;
             var request = new XMLHttpRequest();
@@ -89,8 +91,9 @@
             request.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
-                    if (this.responseText == "success!") {
+                    if (this.responseText == "Success!") {
                         alert("Guide assigned!")
+                        window.location = url1;
                     }
                 };
             }

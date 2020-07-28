@@ -91,10 +91,21 @@ router.get('/guideMidsem/:teamName',(req,res)=>{
 	}
 })
 // assign marks
-router.post('/guideMidsem',(res,req)=>{
-	console.log(req.body.studentId);
-	console.log(req.body.total);
-	console.log(req.body.comments);
+router.post('/guideMidsem',(req,res)=>{
+	
+	Student.findOne({roll : req.body.studentId},(err,validStudent)=>{
+		if(err) res.send("error occuered");
+		else{
+			validStudent.midsemTeacher = req.body.total;
+			validStudent.save((err,data)=>{
+				if(err) res.send("error occuered");
+				else{
+					res.send("marks added successfully !");
+				}
+			})
+		}
+	})
+	
 })
 
 router.get('/guideEndsem/:teamName',(req,res)=>{
@@ -126,6 +137,22 @@ router.get('/guideEndsem/:teamName',(req,res)=>{
 		res.redirect("/");
 	}	
 })
+
+router.post('/guideEndsem',(req,res)=>{
+	Student.findOne({roll : req.body.studentId},(err,validStudent)=>{
+		if(err) res.send("error occuered");
+		else{
+			validStudent.endsemTeacher = req.body.total;
+			validStudent.save((err,data)=>{
+				if(err) res.send("error occuered");
+				else{
+					res.send("marks added successfully !");
+				}
+			})
+		}
+	})
+})
+
 //add a team(team formation)
 router.get('/addTeam',(req,res)=>{
 	if(req.session.ID){
@@ -284,6 +311,33 @@ router.get('/pannelMidsem/:teamName',(req,res)=>{
 	else{
 		res.redirect("/");
 	}
+})
+
+router.post('/pannelMidsem',(req,res)=>{
+	Teacher.findOne({major_students : {$all : [req.body.studentId]}},{pannel_teachers:1},(err,validTeacher)=>{
+		var pannelIndex=null;
+		for(var i=0; i<validTeacher.pannel_teachers.length; i++){
+			if(req.session.ID == validTeacher.pannel_teachers[i]){
+				pannelIndex = i;
+				break;
+			}
+		}
+		Student.findOne({roll : req.body.studentId},(err,validStudent)=>{
+			if(err) res.send("error occuered");
+			else{
+				var list = validStudent.midsemPannel;
+				list[pannelIndex] = Number(req.body.total);
+				validStudent.midsemPannel = list;
+				validStudent.save((err,data)=>{
+					if(err) res.send("error occuered");
+					else{
+						console.log(data.midsemPannel);
+						res.send("Marks added successfully");
+					}
+				})
+			}
+		})
+	})
 })
 
 router.get('/pannelEndsem/:teamName',(req,res)=>{
